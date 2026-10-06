@@ -1,0 +1,35 @@
+/* Content remains visible if JavaScript or IntersectionObserver is unavailable. */
+[data-reveal] {
+  --reveal-x: 0px;
+  --reveal-y: 28px;
+  --reveal-scale: 1;
+  --reveal-delay: 0ms;
+}
+
+[data-reveal="scale-right"] {
+  --reveal-x: 24px;
+  --reveal-y: 0px;
+  --reveal-scale: 0.96;
+}
+
+[data-reveal].reveal-running {
+  animation: armani-reveal 0.8s ease-out var(--reveal-delay) both;
+}
+
+@keyframes armani-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(var(--reveal-x), var(--reveal-y), 0)
+      scale(var(--reveal-scale));
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal].reveal-running {
+    animation: none;
+  }
+}
