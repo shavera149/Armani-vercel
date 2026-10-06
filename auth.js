@@ -5,10 +5,17 @@ const login = document.getElementById('discordLogin');
 const logout = document.getElementById('discordLogout');
 const nameLabel = document.getElementById('accountName');
 const status = document.getElementById('authStatus');
+const accessModal = document.getElementById('applicationAccess');
+const accessLogin = document.getElementById('accessDiscordLogin');
+const accessLabel = document.getElementById('accessButtonLabel');
+const accessMessage = document.getElementById('accessMessage');
+login.addEventListener('click', () => openModal(accessModal));
 
 function message(text) {
   status.textContent = text;
   status.hidden = !text;
+  accessMessage.textContent = text;
+  accessMessage.hidden = !text;
 }
 function renderUser(user) {
   const discord = user?.identities?.find(identity => identity.provider === 'discord');
@@ -18,7 +25,10 @@ function renderUser(user) {
   login.hidden = !!user;
   logout.hidden = !user;
   login.disabled = false;
-  login.textContent = 'Увійти через Discord ↗';
+  login.textContent = 'Доступ до заявок';
+  accessLogin.disabled = false;
+  accessLabel.textContent = 'Увійди через Discord';
+  if (user && accessModal.open) closeModal(accessModal);
 }
 function cleanCallback() {
   const url = new URL(location.href);
@@ -35,9 +45,9 @@ async function initialize() {
     });
     client.auth.onAuthStateChange((_event, session) => renderUser(session?.user || null));
 
-    login.addEventListener('click', async () => {
-      login.disabled = true;
-      login.textContent = 'Переходимо до Discord…';
+    accessLogin.addEventListener('click', async () => {
+      accessLogin.disabled = true;
+      accessLabel.textContent = 'Переходимо до Discord…';
       message('');
       try {
         const { error } = await client.auth.signInWithOAuth({
@@ -77,8 +87,9 @@ async function initialize() {
     renderUser(error ? null : data.user);
     // Login alone grants no editing privileges. Future writes require database RLS.
   } catch {
-    login.disabled = true;
-    login.textContent = 'Вхід тимчасово недоступний';
+    login.disabled = false;
+    accessLogin.disabled = true;
+    accessLabel.textContent = 'Вхід тимчасово недоступний';
     message('Не вдалося підключити авторизацію. Перевірте мережу та перезавантажте сторінку.');
   }
 }
