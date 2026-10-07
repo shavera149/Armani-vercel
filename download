@@ -1,5 +1,6 @@
-setup/
-bot/
-tests/
-README-UA.md
-.env.example
+.env
+*.db
+*.db-wal
+*.db-shm
+__pycache__/
+.venv/

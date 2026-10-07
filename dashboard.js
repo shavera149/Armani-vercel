@@ -85,12 +85,12 @@ function paintRanking(rows){
   const list=document.querySelector('.leaderboard-list');list.replaceChildren();
   if(!rows.length){const empty=document.createElement('li');empty.className='toprow';empty.textContent='Бот ще не передав рейтинг.';list.append(empty);return;}
   const max=rows[0].xp||1;
-  rows.slice(0,3).forEach((r,i)=>{
-    const li=document.createElement('li');li.className='toprow '+['first','second','third'][i];
+  rows.slice(0,10).forEach((r,i)=>{
+    const li=document.createElement('li');li.className='toprow '+(['first','second','third'][i] || '');
     const position=document.createElement('span');position.className='position';position.textContent=String(i+1).padStart(2,'0');
     const player=document.createElement('div');player.className='player';const name=document.createElement('strong');name.textContent=r.nickname;
     const track=document.createElement('span');track.className='xp-track';track.setAttribute('aria-hidden','true');const bar=document.createElement('i');bar.style.width=`${Math.min(100,r.xp/max*100)}%`;track.append(bar);player.append(name,track);
-    const xp=document.createElement('div');xp.className='xp-value';xp.textContent=fmt(r.xp)+' XP';li.append(position,player,xp);list.append(li);
+    const xp=document.createElement('div');xp.className='xp-value';xp.textContent=fmt(r.xp)+' RP';li.append(position,player,xp);list.append(li);
   });
   document.dispatchEvent(new Event('armani:ranking-change'));
 }
@@ -99,10 +99,16 @@ async function refresh(){
   try{
     const results=await Promise.all([
       db.from('armani_leadership').select('*').order('slot'),db.from('armani_media').select('*'),
-      db.from('armani_stats').select('*').eq('id',1).single(),db.from('armani_leaderboard').select('nickname,xp').order('xp',{ascending:false}).order('discord_id').limit(3)
+      db.from('armani_stats').select('*').eq('id',1).single(),db.from('armani_rp_leaderboard').select('nickname,xp:rp_balance').order('position').limit(10),
+      db.from('armani_rp_sync_status').select('updated_at').eq('id',1).single()
     ]);
     if(results.some(r=>r.error))throw Error('content_unavailable');
     leaders=results[0].data;media=results[1].data;stats=results[2].data;paint();paintRanking(results[3].data);
+    document.querySelector('.premium-foot>span:last-child').textContent='TOP 10';
+    document.querySelector('.leaderboard-head>span:last-child').textContent='БАЛАНС RP';
+    const synced=results[4].data.updated_at;
+    document.querySelector('.update-mode').textContent='Discord · RP';
+    $('syncNote').textContent=synced ? `RP із Discord · синхронізовано ${new Date(synced).toLocaleString('uk-UA')} · перевірка кожні 30 с` : 'Бот ще не передав RP-рейтинг.';
   }catch{$('syncNote').textContent='Спільні дані недоступні. Показано останні завантажені дані або ескіз. Власнику: перевірте встановлення SQL.';}
   finally{refreshInProgress=false;}
 }
