@@ -1,5 +1,17 @@
-.env
-.env.*
-!.env.example
-node_modules/
-.vercel/
+setup/
+README.md
+.env*
+*.py
+*.pyc
+*.db
+*.db-wal
+*.db-shm
+requirements.txt
+__pycache__/
+.venv/
+tests/
+*.cjs
+download*
+api /
+ranking-sync.js
+bot/

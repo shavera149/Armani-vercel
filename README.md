@@ -1,51 +1,81 @@
-# ARMANI — версія для Vercel
+# ARMANI — файли сайту для GitHub / Vercel
 
-У цій версії збережено дизайн і додано вхід/вихід через Discord та Supabase.
-Сайт у ChatGPT Sites цей архів не змінює. Нова версія ще не опублікована.
+Зібрано з shavera149/Armani-vercel, коміт ce906c8. Збережено поточні HTML, CSS, зображення, авторизацію та редактор сайту.
 
-## Публікація через GitHub і Vercel
+## Що було неправильно
 
-1. Розпакуйте ZIP. Створіть у GitHub репозиторій `armani-family`.
-2. Завантажте в корінь репозиторію папку `public`, файл `vercel.json` та цей README.
-   Не завантажуйте ZIP як один файл і не вкладайте все у додаткову папку.
-3. У Vercel: Add New → Project → імпортуйте репозиторій.
-4. Framework Preset: Other. Root Directory: корінь репозиторію.
-   Output Directory: public. Команди встановлення й збірки не потрібні.
-5. Натисніть Deploy. Скопіюйте основну Production-адресу `https://….vercel.app`.
+У репозиторії одночасно були дві різні папки: `api` та `api ` (друга закінчується пробілом). Новий діагностичний rp-sync.js лежав у другій папці, а за робочою адресою /api/rp-sync залишався старий код. Це пояснює відсутність upstream_status і db_code в повідомленні бота. Причину відмови Supabase нове повідомлення допоможе з’ясувати після встановлення.
 
-## Дозволити повернення із Supabase
+Python-бот, його requirements, старі адаптери, тести й SQL були перемішані в корені сайту. У цьому пакеті лише сайт, поточний API та SQL у setup. Секретів і бази бота немає.
 
-У Supabase → Authentication → URL Configuration:
-- Site URL: ваша Production-адреса Vercel з `/` у кінці.
-- Redirect URLs → Add URL: та сама точна адреса з `/` у кінці.
-- Збережіть зміни. Не використовуйте випадкову Preview-адресу.
+## Правильне розміщення
 
-У Discord Developer Portal залишається Redirect:
-https://adczgnhrhzrjhxoahshh.supabase.co/auth/v1/callback
+| Шлях | Призначення |
+| --- | --- |
+| index.html | Головна сторінка |
+| auth.js | Discord-вхід та профіль |
+| dashboard.js | Контент, адмін-редактор, топ RP |
+| portal.js, portal.css | Інтерактивні розділи |
+| luxury-theme.css | Оформлення |
+| scroll-reveal.js, scroll-reveal.css | Анімації |
+| armani.png | Зображення |
+| api/rp-sync.js | Єдина функція приймання RP від бота |
+| setup/01-schema.sql, setup/02-admin.sql, setup/03-rp-ranking.sql | SQL для налаштування Supabase |
+| vercel.json | Налаштування публікації |
+| .vercelignore | Виключення SQL, документації, залишкових файлів бота з розгортання |
+| .gitignore | Захист від випадкового додавання локальних секретів/бази |
 
-В Authentication → Sign In / Providers → Discord мають бути збережені
-Client ID і Client Secret. Discord Client Secret ніколи не додавайте в код.
+## Як завантажити
+
+1. Розпакуйте ZIP на комп’ютері. Сам ZIP у репозиторій не завантажуйте.
+2. У GitHub відкрийте репозиторій Armani-vercel, гілку main, корінь (де index.html).
+3. Add file → Upload files. Перетягніть ВЕСЬ ВМІСТ розпакованого архіву, включно з папками api та setup і файлами .gitignore / .vercelignore. Не перетягуйте лише файли зсередини api: папка має зберегтися.
+4. Не створюйте додаткову папку з назвою архіву. Правильний шлях — api/rp-sync.js, а не armani-github-ready/api/rp-sync.js і не api /rp-sync.js.
+5. Commit changes. Перевірте, що всередині api/rp-sync.js є текст upstream_status.
+6. Приберіть старі зайві файли зі списку нижче. GitHub Upload files замінює однойменні файли, але НЕ видаляє решту автоматично.
+
+## Що видалити зі старого GitHub-репозиторію
+
+Лише з репозиторію САЙТУ, не з робочої папки бота на комп’ютері:
+
+- папку `api ` із пробілом у кінці (не правильну папку `api`);
+- armani.py;
+- website_sync.py;
+- requirements.txt;
+- env.example;
+- download;
+- download (1);
+- ranking-sync.js;
+- ranking-sync.cjs;
+- ranking-api.cjs;
+- test-api.cjs;
+- test_rp.py;
+- README-UA.md;
+- 01-schema.sql, 02-admin.sql, 03-rp-ranking.sql у корені — їх копії вже є в setup.
+
+Не видаляйте репозиторій або Vercel-проєкт. Не чіпайте armani_bot.db, .env і Python-файли у вашій локальній папці ARMANI NG. Завантаження .vercelignore також виключає більшість цих зайвих файлів із публікації, поки ви завершуєте очищення.
+
+## Vercel
+
+Проєкт уже пов’язаний із GitHub — дочекайтеся нового Production deployment саме вашого останнього коміту зі статусом Ready. Не робіть Promote старого deployment.
+
+Змінні Production:
+
+| Назва | Значення |
+| --- | --- |
+| DISCORD_GUILD_ID | 1555649348501770351 |
+| BOT_SYNC_TOKEN | Такий самий секрет, як у .env бота |
+| SUPABASE_SECRET_KEY | Ключ sb_secret_… із Supabase Armani Project |
+
+Не додавайте сюди Discord-токен. Після зміни змінних зробіть Redeploy. Налаштування збірки — Other, корінь репозиторію; конфігурація outputDirectory вже є у vercel.json.
+
+SQL уже виконувався у вашому Supabase; для виправлення папок запускати його повторно не потрібно.
 
 ## Перевірка
 
-Відкрийте Production-адресу → Увійти через Discord → авторизуйте застосунок.
-Після повернення має з'явитися ім'я профілю та кнопка Вийти.
-Перезавантажте сторінку: вхід має зберегтись. Натисніть Вийти.
-Перевірте також скасування входу на екрані Discord.
+1. Відкрийте https://armani-famili.vercel.app/api/rp-sync у браузері. Очікується {"error":"method_not_allowed"} — браузер робить GET, а бот використовує POST. Це підтверджує доступність функції, але не успіх зв’язку з Supabase.
+2. На комп’ютері запустіть бота з останнім website_sync.py із пакета armani-checked.zip.
+3. За помилки Supabase рядок [ARMANI SITE] тепер має включати upstream_status і db_code. Надішліть цей рядок, якщо 502 залишиться. Ключі не надсилайте.
+4. За успіху бот напише TOP RP передано на сайт; сайт перевіряє зміни кожні 30 секунд.
 
-Вхід створює користувача в Supabase Auth. Він не підтверджує членство в
-Discord-сервері Armani і не видає права керівництва.
-Фото, рейтинг і ручні налаштування залишаються локальним ескізом.
-Спільна база, серверна перевірка ролей і правила RLS потребують наступного етапу.
-
-## Файли
-
-- public/index.html — сторінка та наявні інтеракції.
-- public/assets/auth.js — Supabase OAuth PKCE, профіль, вихід.
-- public/assets/ — стилі, анімації, зображення.
-- vercel.json — розміщення статичних файлів та HTTP-заголовки.
-
-У коді лише публічні Supabase URL і publishable key.
-Supabase SDK завантажується з esm.sh; для входу потрібен доступ до цього CDN,
-Supabase і Discord. Права доступу до майбутніх даних мають контролюватися RLS,
-а не приховуванням елементів інтерфейсу.
+Пакет перевірено локально: посилання на ресурси, синтаксис усіх JS та inline-скриптів, авторизація/валідація API, імітація успішної відповіді Supabase та діагностичних помилок. Віддалений репозиторій не змінювався, розгортання не виконувалося, статистика не надсилалася.
