@@ -145,13 +145,13 @@
     const name = card.querySelector('h3').textContent;
     button.setAttribute('aria-label', `Переглянути ${name}`);
     button.querySelector('.pill').textContent = 'Переглянути ↗';
-    button.addEventListener('click', () => showMedia(name, fleetDescriptions[index], button.querySelector('svg').outerHTML));
+    button.addEventListener('click', () => showMedia(button.querySelector('h3').textContent, button.dataset.description || fleetDescriptions[index], button.querySelector('.car-art').innerHTML));
     card.replaceWith(button);
   });
   outfits.forEach((outfit, index) => {
     const button = document.createElement('button'); button.type = 'button'; button.className = 'car media-card';
     button.innerHTML = `<div class="car-art outfit-art"><span class="car-label">DRESSCODE / 0${index + 1}</span>${suit(outfit.color)}</div><div class="car-bottom"><div><h3>${outfit.name}</h3><small>${outfit.type}</small></div><span class="pill">Переглянути ↗</span></div>`;
-    button.addEventListener('click', () => showMedia(outfit.name, outfit.desc, suit(outfit.color)));
+    button.addEventListener('click', () => showMedia(button.querySelector('h3').textContent, button.dataset.description || outfit.desc, button.querySelector('.car-art').innerHTML));
     get('outfits').append(button);
   });
   document.querySelectorAll('[data-gallery]').forEach((button) => button.addEventListener('click', () => {

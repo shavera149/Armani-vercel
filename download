@@ -1,0 +1,5 @@
+setup/
+bot/
+tests/
+README-UA.md
+.env.example

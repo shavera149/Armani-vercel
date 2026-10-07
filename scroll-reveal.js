@@ -60,6 +60,11 @@
   observeGroup('#rules details');
   observeGroup('.join', 'fade-up', 0);
 
+  document.addEventListener('armani:ranking-change', () => {
+    elements.forEach(element => {if(!element.isConnected){observer.unobserve(element);elements.delete(element);running.delete(element);}});
+    observeGroup('#ranking .toprow', 'scale-right');
+  });
+
   // Delay menu-driven reveal until the scroll settles, including nearby panels.
   document.addEventListener('armani:navigation-start', () => {
     navigating = true;
