@@ -38,7 +38,9 @@ function editLeader(slot){
   editor={kind:'leader',id:slot};$('contentEditorTitle').textContent='Редагувати вищий склад';
   $('contentTitle').value=row.nickname;$('contentTitle').maxLength=40;$('contentDescription').value=row.description;
   $('contentDescription').maxLength=100;$('contentRole').value=row.role;
-  $('roleField').hidden=false;$('photoField').hidden=true;startEditor();
+  $('roleField').hidden=false;$('photoField').hidden=false;startEditor();
+  const preview=$('leaderPhotoPreview');preview.hidden=!validPath(row.image_path);
+  if(!preview.hidden)preview.src=imageUrl(row.image_path);
 }
 function editMedia(slot){
   const row=media.find(r=>r.slot===slot);if(!admin||!row||busy)return;
@@ -46,13 +48,19 @@ function editMedia(slot){
   $('contentTitle').value=row.title;$('contentTitle').maxLength=80;$('contentDescription').value=row.description;
   $('contentDescription').maxLength=1000;$('roleField').hidden=true;$('photoField').hidden=false;startEditor();
 }
-function startEditor(){$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
+function startEditor(){$('leaderPhotoPreview').hidden=true;$('leaderPhotoPreview').removeAttribute('src');$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
 function paint() {
   const cards=[...document.querySelectorAll('#team .leadership-card')];
   leaders.forEach(row=>{
     const card=cards[row.slot-1];if(!card)return;
     card.querySelector('strong').textContent=row.nickname;card.querySelector('small').textContent=row.description;
     card.querySelector('.rank').textContent=row.role;card.querySelector('.avatar>span').textContent=Array.from(row.nickname)[0]||'A';
+    const avatar=card.querySelector('.avatar');let photo=avatar.querySelector('img');
+    if(validPath(row.image_path)){
+      if(!photo){photo=document.createElement('img');avatar.append(photo);}
+      photo.src=imageUrl(row.image_path);photo.alt=`Персонаж ${row.nickname}`;photo.loading='lazy';
+      avatar.classList.add('has-photo');
+    }else{photo?.remove();avatar.classList.remove('has-photo');}
   });
   media.forEach(row=>{
     if(row.slot==='estate'){
@@ -128,8 +136,22 @@ $('contentForm').addEventListener('submit',async e=>{
     const title=$('contentTitle').value.trim(),description=$('contentDescription').value.trim();
     if(!title)throw Error('Вкажіть назву або нікнейм.');
     if(selection.kind==='leader'){
-      const {data,error}=await db.from('armani_leadership').update({nickname:title,description,role:$('contentRole').value}).eq('slot',selection.id).select('slot');
-      if(error||!data?.length)throw Error('Не вдалося зберегти. Перевірте права адміністратора.');
+      if(title.length<2||title.length>40)throw Error('Нікнейм має містити від 2 до 40 символів.');
+      const update={nickname:title,description,role:$('contentRole').value};
+      const file=$('contentPhoto').files[0];
+      if(file){
+        await validateImage(file);
+        const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[file.type];
+        newPath=`media/${crypto.randomUUID()}.${ext}`;
+        const {error}=await db.storage.from('armani-media').upload(newPath,file,{contentType:file.type,upsert:false});
+        if(error)throw Error('Не вдалося завантажити фото. Перевірте права адміністратора та Storage.');
+        update.image_path=newPath;
+      }
+      const {data,error}=await db.from('armani_leadership').update(update).eq('slot',selection.id).select('slot');
+      if(error||!data?.length){
+        if(newPath){try{await db.storage.from('armani-media').remove([newPath]);}catch{}}
+        throw Error('Не вдалося зберегти. Перевірте права адміністратора й виконання SQL-оновлення для чотирьох карток.');
+      }
     }else{
       const file=$('contentPhoto').files[0];const update={title,description};
       if(file){
