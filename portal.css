@@ -5,3 +5,58 @@
 @media(prefers-reduced-motion:reduce){.rule-content{animation:none!important}.accordion-icon{transition:none}}
 
 .btn:disabled{cursor:default;opacity:.65;transform:none;box-shadow:none}
+
+
+/* Full-size uploaded photos: fleet, dresscode and their preview. */
+#garage .media-admin-wrap,
+#garage .media-card {
+  width: 100%;
+  min-width: 0;
+}
+#garage .media-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  text-align: left;
+}
+#garage .media-card .car-art {
+  height: clamp(260px, 26vw, 440px);
+}
+#garage .car-art:has(img) {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: auto;
+  background-color: #040712;
+}
+#garage .car-art img {
+  display: block;
+  position: static;
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+#garage .car-bottom {
+  margin-top: auto;
+  width: 100%;
+}
+#galleryModal {
+  width: min(1000px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+#galleryModal .gallery-preview:has(img) {
+  height: auto;
+  min-height: 0;
+  background: #040712;
+}
+#galleryModal .gallery-preview img {
+  display: block;
+  position: static;
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain;
+}
