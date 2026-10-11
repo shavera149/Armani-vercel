@@ -38,7 +38,7 @@ function editLeader(slot){
   editor={kind:'leader',id:slot};$('contentEditorTitle').textContent='Редагувати вищий склад';
   $('contentTitle').value=row.nickname;$('contentTitle').maxLength=40;$('contentDescription').value=row.description;
   $('contentDescription').maxLength=100;$('contentRole').value=row.role;
-  $('roleField').hidden=false;$('photoField').hidden=false;startEditor();
+  $('vehicleFields').hidden=true;$('roleField').hidden=false;$('photoField').hidden=false;startEditor();
   const preview=$('leaderPhotoPreview');preview.hidden=!validPath(row.image_path);
   if(!preview.hidden)preview.src=imageUrl(row.image_path);
 }
@@ -47,7 +47,30 @@ function editMedia(slot){
   editor={kind:'media',id:slot};$('contentEditorTitle').textContent='Фото та опис';
   $('contentTitle').value=row.title;$('contentTitle').maxLength=80;$('contentDescription').value=row.description;
   $('contentDescription').maxLength=1000;$('roleField').hidden=true;$('photoField').hidden=false;startEditor();
+  $('vehicleFields').hidden=!slot.startsWith('fleet-');
+  if(slot.startsWith('fleet-'))fillVehicleFields(row.vehicle_specs||{});
 }
+
+const vehicleFields={category:'vehicleCategory',quantity:'vehicleQuantity',minRank:'vehicleRank',horsepower:'vehiclePower',engine:'vehicleEngine',drivetrain:'vehicleDrive',maxSpeedKmh:'vehicleSpeed',acceleration:'vehicleAcceleration',seats:'vehicleSeats',location:'vehicleLocation'};
+const vehicleDefaults={category:'Преміум',quantity:1,minRank:1,horsepower:'Уточнюється',engine:'Уточнюється',drivetrain:'Уточнюється',maxSpeedKmh:0,acceleration:'Уточнюється',seats:'Уточнюється',location:'Буде додано'};
+function fillVehicleFields(specs){
+  for(const [key,id] of Object.entries(vehicleFields))$(id).value=specs[key]??vehicleDefaults[key];
+  $('vehiclePlates').value=Array.isArray(specs.plates)?specs.plates.join('\n'):'';
+}
+function readVehicleFields(){
+  const result={};
+  for(const [key,id] of Object.entries(vehicleFields))result[key]=$(id).value.trim();
+  for(const [key,min,max] of [['quantity',1,999],['minRank',1,999],['maxSpeedKmh',0,2000]]){
+    const value=Number(result[key]);if(result[key]===''||!Number.isInteger(value)||value<min||value>max)throw Error('Перевірте кількість, ранг і швидкість: потрібні цілі числа в межах полів.');result[key]=value;
+  }
+  for(const [key,max] of [['category',40],['horsepower',60],['engine',60],['drivetrain',60],['acceleration',60],['seats',60],['location',150]]){
+    if(!result[key]||result[key].length>max)throw Error('Заповніть усі характеристики. Якщо даних немає — вкажіть «Уточнюється».');
+  }
+  result.plates=[...new Set($('vehiclePlates').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean))];
+  if(result.plates.length>30||result.plates.some(p=>p.length>24))throw Error('Максимум 30 номерів, кожен до 24 символів.');
+  return result;
+}
+
 function startEditor(){$('leaderPhotoPreview').hidden=true;$('leaderPhotoPreview').removeAttribute('src');$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
 function paint() {
   const cards=[...document.querySelectorAll('#team .leadership-card')];
@@ -80,6 +103,7 @@ function paint() {
       img.src=imageUrl(row.image_path);img.alt=row.title;img.loading='lazy';
     }
   });
+  document.dispatchEvent(new CustomEvent('armani:fleet-data',{detail:media.filter(row=>row.slot.startsWith('fleet-'))}));
   if(stats){
     $('familyRank').textContent='#'+String(stats.family_rank).padStart(2,'0');$('familyPoints').textContent=fmt(stats.points);
     const counters=document.querySelectorAll('.stats .stat strong');counters[0].textContent=fmt(stats.members);counters[1].textContent=fmt(stats.vehicles);
@@ -154,6 +178,7 @@ $('contentForm').addEventListener('submit',async e=>{
       }
     }else{
       const file=$('contentPhoto').files[0];const update={title,description};
+      if(selection.id.startsWith('fleet-'))update.vehicle_specs=readVehicleFields();
       if(file){
         await validateImage(file);const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[file.type];
         newPath=`media/${crypto.randomUUID()}.${ext}`;
@@ -162,7 +187,7 @@ $('contentForm').addEventListener('submit',async e=>{
         update.image_path=newPath;
       }
       const {data,error}=await db.from('armani_media').update(update).eq('slot',selection.id).select('slot');
-      if(error||!data?.length){if(newPath)await db.storage.from('armani-media').remove([newPath]);throw Error('Не вдалося зберегти картку. Спробуйте ще раз.');}
+      if(error||!data?.length){if(newPath)await db.storage.from('armani-media').remove([newPath]);throw Error(error?.code==='PGRST204'||error?.code==='42703'?'Спочатку виконайте 06-fleet-catalog.sql у Supabase SQL Editor.':'Не вдалося зберегти картку. Перевірте права адміністратора.');}
       // Old images are kept, so parallel edits never delete another saved image.
     }
     $('contentFeedback').textContent='Збережено для всіх відвідувачів.';await refresh();
