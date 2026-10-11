@@ -211,12 +211,68 @@ dialog[open].is-closing::backdrop{animation:backdrop-exit 240ms ease-in both}
   font-size: 11px;
   color: #e6c98b;
 }
+</style><style id="armani-fleet-interactive">#fleetExperience{--fleet-gold:#D4AF37;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:26px;align-items:start;color:#f1f3fa}
+#fleetExperience #cars{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch}
+#fleetExperience .media-admin-wrap{display:flex;min-width:0}
+#fleetExperience #cars .fleet-choice{display:flex;flex-direction:column;position:relative;width:100%;height:100%;min-width:0;padding:23px;border:1px solid #d4af373d;border-radius:15px;text-align:left;background:radial-gradient(ellipse at 60% 0,#24458145,transparent 75%),#0b1428b5;backdrop-filter:blur(16px);color:#f1f3fa;transition:border-color .25s,box-shadow .25s,transform .25s}
+#fleetExperience #cars .fleet-choice:hover{border-color:#d4af3799;transform:translateY(-3px)}
+#fleetExperience #cars .fleet-choice.is-selected{border-color:#d4af37;box-shadow:inset 0 0 30px #d4af3708,0 0 25px #d4af3710}
+#fleetExperience #cars .fleet-choice:focus-visible{outline:2px solid #f0d687;outline-offset:4px}
+#fleetExperience #cars .fleet-choice-top{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:9px;letter-spacing:1.5px;color:#bbab81;padding-right:0}
+#fleetExperience .media-admin-wrap:has(.admin-edit:not([hidden])) .fleet-choice-top{padding-top:24px}
+#fleetExperience #cars .fleet-choice-arrow{font-size:18px;color:#d4af37}
+#fleetExperience #cars .fleet-choice .car-art{display:grid;place-items:center;height:110px;min-height:0;width:100%;padding:0;margin:10px 0;background:transparent;overflow:hidden}
+#fleetExperience #cars .fleet-choice .car-art svg,#fleetExperience #cars .fleet-choice .car-art img{display:block;position:static;width:100%;height:100%;max-height:110px;object-fit:contain}
+#fleetExperience #cars .fleet-choice .car-bottom{display:block;border:0;padding:0;width:100%;min-height:0;margin:0}
+#fleetExperience #cars .fleet-choice h3{font-size:clamp(18px,1.6vw,25px);font-family:Georgia,serif;font-weight:400;line-height:1.2;overflow-wrap:anywhere;margin:0 0 9px}
+#fleetExperience #cars .fleet-choice small{display:block;font-size:12px;line-height:1.7;color:#9eabc1;white-space:normal;overflow-wrap:anywhere}
+#fleetExperience .fleet-mini-speed{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-top:22px;margin-top:auto}
+#fleetExperience .fleet-mini-speed span{font-size:8px;letter-spacing:1.5px;color:#8191ae}
+#fleetExperience .fleet-mini-speed strong{font-size:13px;font-weight:500;color:#e5cc84;font-variant-numeric:tabular-nums}
+#fleetExperience .fleet-track{height:3px;width:100%;background:#25324a;border-radius:10px;overflow:hidden;margin-top:10px}
+#fleetExperience .fleet-track>span{display:block;height:100%;background:linear-gradient(90deg,#365da1,#d4af37);border-radius:inherit;transition:width .65s ease-out}
+#fleetDetail{border:1px solid #d4af375e;border-radius:18px;overflow:hidden;background:linear-gradient(145deg,#11213bba,#080f20ed);backdrop-filter:blur(18px);box-shadow:0 20px 65px #0003;min-width:0}
+.fleet-preview-heading{display:flex;justify-content:space-between;padding:23px 28px 0;gap:15px;color:#bcab77;font-size:9px;letter-spacing:2px}
+#fleetStage{display:grid;place-items:center;aspect-ratio:16/10;min-width:0;overflow:hidden;margin:0 20px;background:radial-gradient(ellipse at 50% 65%,#24529448,transparent 66%)}
+#fleetStage>img,#fleetStage>svg{display:block;width:100%;height:100%;min-height:0;max-height:100%;object-fit:contain}
+#fleetImageNote{text-align:center;font-size:8px;letter-spacing:2px;color:#8392b0;margin:0;padding:0 20px 22px}
+.fleet-detail-copy{padding:28px;border-top:1px solid #d4af3726}
+#fleetCategory{color:#d4af37;font-size:9px;letter-spacing:2px;margin:0 0 10px}
+#fleetName{font-family:Georgia,serif;font-weight:400;font-size:clamp(30px,3vw,48px);letter-spacing:-.8px;margin:0;overflow-wrap:anywhere}
+#fleetDescription{font-size:13px;color:#aab7cc;line-height:1.85;margin:14px 0 23px;overflow-wrap:anywhere}
+.fleet-specs{display:grid;grid-template-columns:1.25fr 1fr .6fr;gap:16px;padding:20px 0;margin:0;border-top:1px solid #a4b9e118;border-bottom:1px solid #a4b9e118}
+.fleet-specs dt{font-size:9px;color:#8191ad;margin-bottom:9px;letter-spacing:1px}
+.fleet-specs dd{font-size:13px;color:#e4e9f5;margin:0;overflow-wrap:anywhere}
+.fleet-speed-header{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:25px 0 14px}
+.fleet-speed-header>span{font-size:9px;line-height:1.7;letter-spacing:1.6px;color:#b0a078}
+.fleet-speed-number{white-space:nowrap;font-size:13px;color:#b5c0d3}
+#fleetSpeed{font-size:42px;line-height:1;font-weight:400;letter-spacing:-2px;color:#f0d98e;font-variant-numeric:tabular-nums}
+#fleetGauge{height:9px;background:#26324a;border-radius:3px;overflow:hidden}
+#fleetGaugeFill{display:block;height:100%;background:linear-gradient(90deg,#3159a0,#b6a464 70%,#edce70);transition:width .65s ease-out}
+.fleet-gauge-labels{display:flex;justify-content:space-between;font-size:9px;color:#7d8ba4;margin-top:10px;font-variant-numeric:tabular-nums}
+.fleet-example-note{font-size:10px;color:#8191ad;margin:22px 0 0;line-height:1.6}
+@media(min-width:1500px){#fleetExperience #cars .fleet-choice .car-art{height:160px}#fleetExperience #cars .fleet-choice .car-art img,#fleetExperience #cars .fleet-choice .car-art svg{max-height:160px}}
+@media(max-width:1000px){#fleetExperience{grid-template-columns:minmax(0,1fr)}#fleetStage{aspect-ratio:16/8}}
+@media(max-width:520px){#fleetExperience #cars{gap:10px}#fleetExperience #cars .fleet-choice{padding:14px;border-radius:11px}#fleetExperience #cars .fleet-choice .car-art{height:80px}#fleetExperience #cars .fleet-choice .car-art img,#fleetExperience #cars .fleet-choice .car-art svg{max-height:80px}#fleetExperience #cars .fleet-choice-top{font-size:7px;letter-spacing:.8px}#fleetExperience #cars .fleet-choice h3{font-size:19px}#fleetExperience #cars .fleet-choice small{font-size:11px}#fleetExperience .fleet-mini-speed{flex-wrap:wrap;gap:4px}.fleet-detail-copy{padding:21px}.fleet-preview-heading{padding:20px 20px 0}.fleet-specs{gap:10px}}
+@media(prefers-reduced-motion:reduce){#fleetExperience *,#fleetExperience *::before,#fleetExperience *::after{animation:none!important;transition:none!important}#fleetExperience #cars .fleet-choice:hover{transform:none}}
 </style></head><body>
 <header><div class="wrap"><a class="brand" href="#home"><span class="mark">♛</span> ARMANI</a><nav class="nav" aria-label="Навігація"><a href="#estate"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-6 9 6M5 9v11h14V9M9 20v-7h6v7"/></svg>Маєток</a><a href="#garage"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 2-5h12l2 5M3 10h18v8H3zM6 18v3m12-3v3M6 14h2m8 0h2"/></svg>Автопарк</a><a href="#team"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3M3 11a3 3 0 0 0 3 3m15-3a3 3 0 0 1-3 3"/></svg>Склад сім’ї</a><a href="#ranking"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4m-4 1v5m-4 3h8"/></svg>Рейтинг</a><a href="#rules">Правила</a><a href="#community">Discord</a></nav><div class="account-actions"><span id="accountName" hidden></span><button class="btn discord" id="discordLogin">Доступ до заявок</button><span id="adminBadge" hidden>ADMIN</span><button class="btn" id="profileOpen" hidden>Мій профіль</button><button class="btn" id="discordLogout" hidden>Вийти</button></div></div></header><div id="authStatus" role="status" hidden></div>
 <main class="wrap" id="home"><section class="hero"><div><div class="eyebrow"><span class="dot"></span> NG ROLEPLAY · БЕТА-ТЕСТ</div><h1>ARMANI</h1><h2>Сім’я понад усе.</h2><p>Один колір. Спільні принципи. Власна історія.<br>Місце тих, хто обирає вірність, повагу<br>та рух уперед разом.</p><div class="actions"><a class="btn primary" href="#estate">Територія сім’ї <span>↗</span></a><button class="btn" id="copyIp" disabled>NG · IP незабаром</button></div></div><div class="crest"><img src="armani.png" alt="Синій королівський герб Armani з короною"><span>LOYALTY · RESPECT · FAMILY</span></div></section>
 <div class="stats"><div class="stat"><span class="icon">♧</span><div><strong>24</strong><small>Учасники сім’ї</small></div></div><div class="stat"><span class="icon">◇</span><div><strong>12</strong><small>Авто у гаражі</small></div></div><div class="stat"><span class="icon">♜</span><div><strong id="familyRank">#08</strong><small>Місце у топі</small></div></div><div class="stat"><span class="icon">✧</span><div><strong id="familyPoints">18 450</strong><small>Очки сім’ї</small></div></div></div><div class="demo">Ескіз · Склад, автомобілі та статистика наведені для прикладу.</div>
 <section class="section" id="estate"><div class="heading"><div><div class="kicker">01 / НАША ТЕРИТОРІЯ</div><h2>Місце, яке ми звемо домом</h2></div><span class="textlink">ARMANI RESIDENCE ↗</span></div><div class="estate"><div class="estate-photo" id="estatePhoto"><div class="placeholder"><svg viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M10 88h120M25 88V43h90v45M16 43l54-30 54 30H16ZM35 52h13v22H35zm29 0h13v36H64zm29 0h13v22H93M53 38h34M21 91h98M12 97h116"/><path d="M31 44v42m24-42v42m29-42v42m24-42v42" opacity=".4"/></svg><p>МІСЦЕ ДЛЯ ВАШОГО СКРИНШОТА</p></div><span class="tag">ТЕРИТОРІЯ ARMANI</span></div><div class="estate-info"><div class="eyebrow">ПРИВАТНА РЕЗИДЕНЦІЯ</div><h3>Маєток сім’ї</h3><p>Тут починаються наші плани й закінчуються довгі вечори в місті. Додайте скриншот, щоб показати територію Armani.</p><div class="details"><div><strong>Локація</strong><small>Буде додано</small></div><div><strong>Доступ</strong><small>Для членів сім’ї</small></div></div><button class="btn" id="uploadBtn" hidden>＋ Додати скриншот</button><input id="upload" type="file" accept="image/png,image/jpeg,image/webp" hidden><div class="demo">Скриншот маєтку доступний усім. Змінює адміністратор.</div></div></div></section>
-<section class="section" id="garage"><div class="heading"><div><div class="kicker">02 / СІМЕЙНИЙ ГАРАЖ</div><h2>Автопарк & дрескод</h2></div><div class="gallery-tabs" role="group" aria-label="Категорія галереї"><button class="gallery-tab active" aria-pressed="true" data-gallery="fleet">Автопарк</button><button class="gallery-tab" aria-pressed="false" data-gallery="dress">Дрескод</button></div></div><p class="sub gallery-intro">Стиль сім’ї — у кожній деталі. Оберіть картку, щоб переглянути опис.</p><div class="cars" id="cars"></div><div class="cars" id="outfits" hidden></div><div class="demo">Концепти для ескізу. Реальні автомобілі, скриншоти й дрескод потребують підтвердження.</div></section>
+<section class="section" id="garage"><div class="heading"><div><div class="kicker">02 / СІМЕЙНИЙ ГАРАЖ</div><h2>Автопарк & дрескод</h2></div><div class="gallery-tabs" role="group" aria-label="Категорія галереї"><button class="gallery-tab active" aria-pressed="true" data-gallery="fleet">Автопарк</button><button class="gallery-tab" aria-pressed="false" data-gallery="dress">Дрескод</button></div></div><p class="sub gallery-intro">Стиль сім’ї — у кожній деталі. Оберіть картку, щоб переглянути опис.</p><div id="fleetExperience">
+<div class="cars" id="cars"></div>
+<section id="fleetDetail" aria-label="Вибраний автомобіль">
+<div class="fleet-preview-heading"><span>ARMANI / MOTOR COLLECTION</span><span id="fleetNumber">01 / 04</span></div>
+<div id="fleetStage"></div><p id="fleetImageNote"></p>
+<div class="fleet-detail-copy"><p id="fleetCategory"></p>
+<div aria-live="polite" aria-atomic="true"><h3 id="fleetName"></h3><p id="fleetDescription"></p></div>
+<dl class="fleet-specs"><div><dt>КЛАС</dt><dd id="fleetClass"></dd></div><div><dt>ПРИВІД</dt><dd id="fleetDrive"></dd></div><div><dt>МІСЦЯ</dt><dd id="fleetSeats"></dd></div></dl>
+<div class="fleet-speed-header"><span>МАКСИМАЛЬНА<br>ШВИДКІСТЬ</span><div class="fleet-speed-number"><strong id="fleetSpeed">0</strong> km/h</div></div>
+<div id="fleetGauge" role="meter" aria-label="Максимальна швидкість" aria-valuemin="0" aria-valuemax="350" aria-valuenow="0"><span id="fleetGaugeFill"></span></div>
+<div class="fleet-gauge-labels" aria-hidden="true"><span>0</span><span id="fleetGaugeEnd">350 km/h</span></div>
+<p class="fleet-example-note">Характеристики наведені для прикладу · значення NG потребують підтвердження.</p>
+</div></section></div><div class="cars" id="outfits" hidden></div><div class="demo">Концепти для ескізу. Реальні автомобілі, скриншоти й дрескод потребують підтвердження.</div></section>
 <div class="lower premium-grid"><section class="section" id="team"><div class="heading"><div><div class="kicker">03 / ЛЮДИ ARMANI</div><h2>Вищий склад</h2></div><span class="premium-caption">THE INNER CIRCLE</span></div><div class="leadership-cards">
 <article class="person leader leadership-card"><div class="card-top"><span>ARMANI / 01</span><span aria-hidden="true">♛</span></div><div class="avatar"><span>A</span><i aria-hidden="true">♛</i></div><div class="card-identity"><strong>Alessandro Armani</strong><small>Лідер сім’ї</small></div><span class="rank">LEADER</span><div class="card-bottom">ВІРНІСТЬ <span aria-hidden="true">◇</span></div></article>
 <article class="person deputy leadership-card"><div class="card-top"><span>ARMANI / 02</span><span aria-hidden="true">◇</span></div><div class="avatar"><span>M</span><i aria-hidden="true">◇</i></div><div class="card-identity"><strong>Marco Armani</strong><small>Заступник лідера</small></div><span class="rank">DEPUTY</span><div class="card-bottom">ПОВАГА <span aria-hidden="true">◇</span></div></article>
@@ -320,4 +376,4 @@ document.querySelectorAll('dialog').forEach(d=>{
   navigationFrame=requestAnimationFrame(afterScroll);
  }));
 })();
-</script><script src="portal.js"></script><script type="module" src="auth.js"></script><script type="module" src="dashboard.js?v=leadership-4-photos"></script></body></html>
+</script><script src="portal.js"></script><script src="fleet.js?v=1"></script><script type="module" src="auth.js"></script><script type="module" src="dashboard.js?v=leadership-4-photos"></script></body></html>
