@@ -1,87 +1,115 @@
 (() => {
   'use strict';
-  const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
   if (!('IntersectionObserver' in window)) return;
-  const STAGGER_MS = 120;
-  const elements = new Set();
-  const running = new Set();
+  const preference = matchMedia('(prefers-reduced-motion: reduce)');
+  const seen = new WeakSet();
+  const pending = new Set();
+  const running = new Map();
+  let observer;
   let navigating = false;
-
+  let resizeFrame = 0;
+  let headerInset = 0;
+  const bottomInset = 32;
+  // Blocks enter the usable viewport below the sticky header. There is no
+  // percentage threshold: even a card taller than the viewport can be revealed.
+  function updateHeaderInset() {
+    const header = document.querySelector('header');
+    headerInset = Math.max(0, Math.ceil(header?.getBoundingClientRect().height || 0));
+    headerInset = Math.min(headerInset, Math.max(0, innerHeight - bottomInset - 80));
+  }
+  function inZone(element) {
+    if (!element.isConnected || !element.getClientRects().length) return false;
+    const rect = element.getBoundingClientRect();
+    return rect.bottom > headerInset && rect.top < innerHeight - bottomInset;
+  }
   function finish(element) {
-    element.classList.remove('reveal-running');
+    const timer = running.get(element);
+    if (timer !== undefined) clearTimeout(timer);
     running.delete(element);
+    element.classList.remove('reveal-running');
   }
   function reveal(element) {
-    if (motionPreference.matches || !element.getClientRects().length) return;
-    finish(element);
-    // Restart even when the same menu item is selected again.
-    void element.offsetWidth;
+    if (seen.has(element) || !element.isConnected || !element.getClientRects().length) return;
+    // Stop observing BEFORE transform starts. Scroll and animation cannot
+    // retrigger each other, including when the card sits on a viewport edge.
+    seen.add(element);
+    pending.delete(element);
+    observer.unobserve(element);
+    if (preference.matches) return;
     element.classList.add('reveal-running');
-    running.add(element);
+    const delay = Number(element.dataset.revealDelay) || 0;
+    running.set(element, setTimeout(() => finish(element), 850 + delay));
+    element.addEventListener('animationend', function onEnd(event) {
+      if (event.target !== element || event.animationName !== 'armani-reveal') return;
+      element.removeEventListener('animationend', onEnd);
+      finish(element);
+    });
   }
-  function isVisible(element) {
-    if (!element.getClientRects().length) return false;
-    const rect = element.getBoundingClientRect();
-    const headerBottom = document.querySelector('header').getBoundingClientRect().bottom;
-    return rect.bottom > headerBottom && rect.top < innerHeight;
+  function buildObserver() {
+    observer?.disconnect(); updateHeaderInset();
+    observer = new IntersectionObserver(entries => {
+      if (navigating) return;
+      entries.forEach(entry => {
+        if (entry.isIntersecting && inZone(entry.target)) reveal(entry.target);
+      });
+    }, { root: null, rootMargin: `-${headerInset}px 0px -${bottomInset}px 0px`, threshold: 0 });
+    pending.forEach(element => observer.observe(element));
   }
-  const observer = new IntersectionObserver((entries) => {
-    for (const entry of entries) {
-      if (entry.isIntersecting && !navigating) reveal(entry.target);
-    }
-  }, { threshold: 0.08 });
-
-  function observeGroup(selector, effect = 'fade-up', stagger = STAGGER_MS) {
+  function observeGroup(selector, effect = 'fade-up', stagger = 100) {
     document.querySelectorAll(selector).forEach((element, index) => {
-      if (elements.has(element)) return;
+      if (seen.has(element) || pending.has(element)) return;
       element.dataset.reveal = effect;
-      element.style.setProperty('--reveal-delay', `${index * stagger}ms`);
-      elements.add(element);
-      element.addEventListener('animationend', (event) => {
-        if (event.target === element && event.animationName === 'armani-reveal') finish(element);
-      });
-      observer.observe(element);
+      const delay = Math.min(index * stagger, 240);
+      element.dataset.revealDelay = String(delay);
+      element.style.setProperty('--reveal-delay', `${delay}ms`);
+      pending.add(element); observer.observe(element);
     });
   }
-
-  observeGroup('#team .heading', 'fade-up', 0);
-  observeGroup('#team .person');
-  observeGroup('#ranking .heading', 'scale-right', 0);
-  observeGroup('#ranking .leaderboard-panel', 'scale-right', 0);
-  observeGroup('#ranking .toprow', 'scale-right');
-  observeGroup('.hero > *');
-  observeGroup('#estate .heading, #estate .estate');
-  observeGroup('#garage .heading', 'fade-up', 0);
-  observeGroup('#cars .car');
-  observeGroup('#outfits .car');
-  observeGroup('#community > *');
-  observeGroup('#rules .heading', 'fade-up', 0);
-  observeGroup('#rules .rules-list', 'fade-up', 0);
-  observeGroup('#rules details');
-  observeGroup('.join', 'fade-up', 0);
-
-  document.addEventListener('armani:ranking-change', () => {
-    elements.forEach(element => {if(!element.isConnected){observer.unobserve(element);elements.delete(element);running.delete(element);}});
-    observeGroup('#ranking .toprow', 'scale-right');
-  });
-
-  // Delay menu-driven reveal until the scroll settles, including nearby panels.
-  document.addEventListener('armani:navigation-start', () => {
-    navigating = true;
-    [...running].forEach(finish);
-  });
-  document.addEventListener('armani:navigation-end', () => {
-    navigating = false;
-    elements.forEach(element => { if (isVisible(element)) reveal(element); });
-  });
-  document.addEventListener('armani:gallery-change', (event) => {
-    requestAnimationFrame(() => {
-      elements.forEach(element => {
-        if (event.detail.panel.contains(element) && isVisible(element)) reveal(element);
-      });
+  function scan() {
+    pending.forEach(element => {
+      if (!element.isConnected) { observer.unobserve(element); pending.delete(element); }
     });
+    running.forEach((timer, element) => { if (!element.isConnected) finish(element); });
+    observeGroup('.hero > *');
+    observeGroup('#estate .heading, #estate .estate');
+    observeGroup('#garage .heading', 'fade-up', 0);
+    observeGroup('#cars .car');
+    observeGroup('#outfits .car');
+    observeGroup('#team .heading', 'fade-up', 0);
+    observeGroup('#team .person');
+    observeGroup('#ranking .heading', 'scale-right', 0);
+    // Reveal rows, not both rows and their parent: avoids multiplied opacity.
+    observeGroup('#ranking .toprow', 'scale-right');
+    observeGroup('#community > *');
+    observeGroup('#rules .heading', 'fade-up', 0);
+    observeGroup('#rules details');
+    observeGroup('.join', 'fade-up', 0);
+  }
+  function revealVisible() {
+    if (navigating) return;
+    pending.forEach(element => { if (inZone(element)) reveal(element); });
+  }
+  buildObserver(); scan();
+  document.addEventListener('armani:ranking-change', () => { scan(); revealVisible(); });
+  document.addEventListener('armani:gallery-change', () => {
+    requestAnimationFrame(() => { scan(); revealVisible(); });
   });
-  motionPreference.addEventListener('change', () => {
-    if (motionPreference.matches) [...running].forEach(finish);
+  document.addEventListener('armani:navigation-start', () => { navigating = true; });
+  document.addEventListener('armani:navigation-end', () => {
+    navigating = false; scan(); revealVisible();
+  });
+  // Recalculate the trigger zone after responsive header wrapping or resize.
+  function resized() {
+    cancelAnimationFrame(resizeFrame);
+    resizeFrame = requestAnimationFrame(() => { buildObserver(); revealVisible(); });
+  }
+  window.addEventListener('resize', resized, {passive:true});
+  if ('ResizeObserver' in window) {
+    const header = document.querySelector('header');
+    if (header) new ResizeObserver(resized).observe(header);
+  }
+  preference.addEventListener('change', () => {
+    if (preference.matches) [...running.keys()].forEach(finish);
+    revealVisible();
   });
 })();
