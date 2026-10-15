@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const get = (id) => document.getElementById(id);
-  const defaults = { invite: 'aCtM95daZW', ip: '' };
+  const defaults = { invite: 'aCtM95daZW' };
   let config = { ...defaults };
 
   let refreshTimer;
@@ -25,7 +25,6 @@
 
   function openSettings() {
     get('inviteInput').value = config.invite ? `https://discord.gg/${config.invite}` : '';
-    get('ipInput').value = config.ip;
     get('settingsError').textContent = '';
     openModal(get('serverSettings'));
   }
@@ -34,9 +33,7 @@
     event.preventDefault();
     try {
       const invite = parseInvite(get('inviteInput').value);
-      const ip = get('ipInput').value.trim();
-      if (ip && (!/^[a-zA-Z0-9.:[\]-]+$/.test(ip) || ip.length > 253)) throw new Error('Вкажіть IP або домен із портом, без пробілів і https://.');
-      config = { invite, ip };
+      config = { invite };
       try { localStorage.setItem('armani-server', JSON.stringify(config)); toast('Налаштування збережено у цьому браузері'); }
       catch { toast('Налаштування діють до перезавантаження сторінки'); }
       closeModal(get('serverSettings'));
@@ -57,7 +54,6 @@
     request?.abort();
     clearCounts();
     get('discordName').textContent = 'Спільний голос. Спільні плани.';
-    get('serverAddress').textContent = config.ip || 'Адреса буде пізніше';
     get('discordJoin').hidden = !config.invite;
     if (config.invite) get('discordJoin').href = `https://discord.gg/${encodeURIComponent(config.invite)}`;
     if (!config.invite) { setStatus('Не налаштовано', 'Додайте запрошення Discord, щоб підключити статистику.'); return; }
@@ -102,25 +98,6 @@
     else refreshDiscord();
   });
   applyConfig();
-
-  async function copyIp(event) {
-    if (!config.ip) { toast('NG перебуває в бета-тесті. Адресу сервера додамо пізніше.'); return; }
-    const button = event.currentTarget;
-    try {
-      await navigator.clipboard.writeText(config.ip);
-      const original = button.innerHTML;
-      button.textContent = '✓ Copied!'; button.classList.add('copied'); button.disabled = true;
-      toast('Copied! Адресу сервера скопійовано');
-      setTimeout(() => { button.innerHTML = original; button.classList.remove('copied'); button.disabled = false; }, 1800);
-    } catch {
-      toast('Браузер не дозволив копіювання. Адреса доступна у блоці сервера.');
-      get('serverAddress').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' });
-      const range = document.createRange(); range.selectNodeContents(get('serverAddress'));
-      const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range);
-    }
-  }
-  get('copyIp').addEventListener('click', copyIp);
-  get('copyIpSecondary').addEventListener('click', copyIp);
 
   const fleetDescriptions = [
     'Спорткупе для міських поїздок і зустрічей. Концепт оформлення: королівський синій кузов, стриманий тюнінг і чистий силует. Доступ та модель визначає керівництво.',
