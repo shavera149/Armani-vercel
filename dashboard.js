@@ -24,7 +24,7 @@ function createControls() {
   $('uploadBtn').onclick=()=>editMedia('estate');
   $('editBtn').onclick=()=>{
     if(!admin || !stats)return;
-    $('rankInput').value=stats.family_rank;$('pointsInput').value=stats.points;
+    $('pointsInput').value=stats.points;
     $('membersInput').value=stats.members;$('vehiclesInput').value=stats.vehicles;
     $('statsFeedback').textContent='';openModal($('editModal'));
   };
@@ -105,8 +105,8 @@ function paint() {
   });
   document.dispatchEvent(new CustomEvent('armani:fleet-data',{detail:media.filter(row=>row.slot.startsWith('fleet-'))}));
   if(stats){
-    $('familyRank').textContent='#'+String(stats.family_rank).padStart(2,'0');$('familyPoints').textContent=fmt(stats.points);
-    const counters=document.querySelectorAll('.stats .stat strong');counters[0].textContent=fmt(stats.members);counters[1].textContent=fmt(stats.vehicles);
+    $('familyPoints').textContent=fmt(stats.points);
+    $('familyMembers').textContent=fmt(stats.members);$('familyVehicles').textContent=fmt(stats.vehicles);
     const label=stats.source==='discord'?'Discord-бот':stats.source==='manual'?'Адміністратор':'Демонстраційні дані';
     $('syncNote').textContent=`${label} · ${new Date(stats.updated_at).toLocaleString('uk-UA')} · перевірка оновлень кожні 30 с`;
     document.querySelector('.update-mode').textContent=label;
@@ -194,13 +194,28 @@ $('contentForm').addEventListener('submit',async e=>{
   }catch(error){$('contentFeedback').textContent=error.message||'Помилка збереження. Спробуйте ще раз.';}
   finally{busy=false;$('contentSave').disabled=false;}
 });
+let savingStats=false;
 $('statsForm').addEventListener('submit',async e=>{
-  e.preventDefault();if(!admin)return;const submit=e.currentTarget.querySelector('[type=submit]');submit.disabled=true;
+  e.preventDefault();if(!admin||!db||!stats||savingStats)return;
+  const submit=e.currentTarget.querySelector('[type=submit]');
+  savingStats=true;submit.disabled=true;$('statsFeedback').textContent='Збереження…';
   try{
-    const {error}=await db.rpc('armani_edit_stats',{p_rank:Number($('rankInput').value),p_points:Number($('pointsInput').value),p_members:Number($('membersInput').value),p_vehicles:Number($('vehiclesInput').value)});
-    if(error)throw error;$('statsFeedback').textContent='Збережено для всіх.';await refresh();
-  }catch{$('statsFeedback').textContent='Не вдалося зберегти. Перевірте права адміністратора.';}
-  finally{submit.disabled=false;}
+    const values={};
+    for(const [key,id,max] of [['points','pointsInput',999999999],['members','membersInput',100000],['vehicles','vehiclesInput',100000]]){
+      const raw=$(id).value.trim(),value=Number(raw);
+      if(!raw||!Number.isInteger(value)||value<0||value>max)throw Error('Введіть цілі невід’ємні числа в межах полів.');
+      values[key]=value;
+    }
+    // Preserve the existing backend rank for compatibility; it is no longer
+    // displayed or editable in the family statistics block.
+    const {error}=await db.rpc('armani_edit_stats',{p_rank:stats.family_rank,p_points:values.points,p_members:values.members,p_vehicles:values.vehicles});
+    if(error)throw Error('Не вдалося зберегти. Перевірте з’єднання та права адміністратора.');
+    stats={...stats,...values,source:'manual',updated_at:new Date().toISOString()};
+    $('familyMembers').textContent=fmt(values.members);$('familyVehicles').textContent=fmt(values.vehicles);$('familyPoints').textContent=fmt(values.points);
+    $('statsFeedback').textContent='Збережено для всіх відвідувачів.';
+    await refresh();
+  }catch(error){$('statsFeedback').textContent=error.message||'Помилка збереження.';}
+  finally{savingStats=false;submit.disabled=false;}
 });
 document.addEventListener('armani:session',async e=>{
   db=e.detail.client;const user=e.detail.user;const nextId=user?.id||null;
