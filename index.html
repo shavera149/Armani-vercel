@@ -254,7 +254,7 @@ dialog[open].is-closing::backdrop{animation:backdrop-exit 240ms ease-in both}
 </style></head><body>
 <header><div class="wrap"><a class="brand" href="#home"><span class="mark">♛</span> ARMANI</a><nav class="nav" aria-label="Навігація"><a href="#estate"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-6 9 6M5 9v11h14V9M9 20v-7h6v7"/></svg>Маєток</a><a href="#garage"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 2-5h12l2 5M3 10h18v8H3zM6 18v3m12-3v3M6 14h2m8 0h2"/></svg>Автопарк</a><a href="#team"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3M3 11a3 3 0 0 0 3 3m15-3a3 3 0 0 1-3 3"/></svg>Склад сім’ї</a><a href="#ranking"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4m-4 1v5m-4 3h8"/></svg>Рейтинг</a><a href="#rules">Правила</a><a href="#community">Discord</a></nav><div class="account-actions"><span id="accountName" hidden></span><button class="btn discord" id="discordLogin">Доступ до заявок</button><span id="adminBadge" hidden>ADMIN</span><button class="btn" id="profileOpen" hidden>Мій профіль</button><button class="btn" id="discordLogout" hidden>Вийти</button></div></div></header><div id="authStatus" role="status" hidden></div>
 <main class="wrap" id="home"><section class="hero"><div><div class="eyebrow"><span class="dot"></span> NG ROLEPLAY</div><h1>ARMANI</h1><h2>Сім’я понад усе.</h2><p>Один колір. Спільні принципи. Власна історія.<br>Місце тих, хто обирає вірність, повагу<br>та рух уперед разом.</p><div class="actions"><a class="btn primary" href="#estate">Територія сім’ї <span>↗</span></a></div></div><div class="crest"><img src="armani.png" alt="Синій королівський герб Armani з короною"><span>LOYALTY · RESPECT · FAMILY</span></div></section>
-<div class="stats" id="familyStats"><div class="stat"><span class="icon">♧</span><div><strong id="familyMembers">—</strong><small>Учасники сім’ї</small></div></div><div class="stat"><span class="icon">◇</span><div><strong id="familyVehicles">—</strong><small>Авто у гаражі</small></div></div><div class="stat"><span class="icon">✧</span><div><strong id="familyPoints">—</strong><small>Очки сім’ї</small></div></div></div><div class="stats-actions"><button class="btn" type="button" id="editBtn" aria-controls="editModal" hidden>✎ Редагувати статистику</button></div>
+<div class="stats" id="familyStats" data-version="stats-20261027"><div class="stat"><span class="icon">♧</span><div><strong id="familyMembers">—</strong><small>Учасники сім’ї</small></div></div><div class="stat"><span class="icon">◇</span><div><strong id="familyVehicles">—</strong><small>Авто у гаражі</small></div></div><div class="stat"><span class="icon">✧</span><div><strong id="familyPoints">—</strong><small>Очки сім’ї</small></div></div></div><div class="stats-actions"><button class="btn" type="button" id="editBtn" aria-controls="editModal" hidden>✎ Редагувати статистику</button></div>
 <section class="section" id="estate"><div class="heading"><div><div class="kicker">01 / НАША ТЕРИТОРІЯ</div><h2>Місце, яке ми звемо домом</h2></div><span class="textlink">ARMANI RESIDENCE ↗</span></div><div class="estate"><div class="estate-photo" id="estatePhoto"><div class="placeholder"><svg viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M10 88h120M25 88V43h90v45M16 43l54-30 54 30H16ZM35 52h13v22H35zm29 0h13v36H64zm29 0h13v22H93M53 38h34M21 91h98M12 97h116"/><path d="M31 44v42m24-42v42m29-42v42m24-42v42" opacity=".4"/></svg><p>МІСЦЕ ДЛЯ ВАШОГО СКРИНШОТА</p></div><span class="tag">ТЕРИТОРІЯ ARMANI</span></div><div class="estate-info"><div class="eyebrow">ПРИВАТНА РЕЗИДЕНЦІЯ</div><h3>Маєток сім’ї</h3><p>Тут починаються наші плани й закінчуються довгі вечори в місті. Додайте скриншот, щоб показати територію Armani.</p><div class="details"><div><strong>Локація</strong><small>Буде додано</small></div><div><strong>Доступ</strong><small>Для членів сім’ї</small></div></div><button class="btn" id="uploadBtn" hidden>＋ Додати скриншот</button><input id="upload" type="file" accept="image/png,image/jpeg,image/webp" hidden><div class="demo">Скриншот маєтку доступний усім. Змінює адміністратор.</div></div></div></section>
 <section class="section" id="garage"><div class="heading"><div><div class="kicker">02 / СІМЕЙНИЙ ГАРАЖ</div><h2>Автопарк & дрескод</h2></div><div class="gallery-tabs" role="group" aria-label="Категорія галереї"><button class="gallery-tab active" aria-pressed="true" data-gallery="fleet">Автопарк</button><button class="gallery-tab" aria-pressed="false" data-gallery="dress">Дрескод</button></div></div><p class="sub gallery-intro">Стиль сім’ї — у кожній деталі. Оберіть картку, щоб переглянути опис.</p><div id="fleetExperience"><div id="fleetFilters" role="group" aria-label="Категорії автопарку"></div><div class="cars" id="cars"></div></div><div class="cars" id="outfits" hidden></div><div class="demo">Концепти для ескізу. Реальні автомобілі, скриншоти й дрескод потребують підтвердження.</div></section>
 <div class="lower premium-grid"><section class="section" id="team"><div class="heading"><div><div class="kicker">03 / ЛЮДИ ARMANI</div><h2>Вищий склад</h2></div><span class="premium-caption">THE INNER CIRCLE</span></div><div class="leadership-cards">
@@ -360,4 +360,235 @@ document.querySelectorAll('dialog').forEach(d=>{
   navigationFrame=requestAnimationFrame(afterScroll);
  }));
 })();
-</script><script src="portal.js?v=no-ip-20261015"></script><script src="fleet.js?v=catalog-2"></script><script type="module" src="auth.js"></script><script type="module" src="dashboard.js?v=stats-20261025"></script></body></html>
+</script><script src="portal.js?v=no-ip-20261015"></script><script src="fleet.js?v=catalog-2"></script><script type="module" src="auth.js"></script><script type="module" id="armani-dashboard-inline">
+// Shared public content; all writes are independently authorized by Supabase RLS.
+const $ = id => document.getElementById(id);
+const ROOT = 'https://adczgnhrhzrjhxoahshh.supabase.co';
+let db, currentId = null, admin = false, permissionRevision = 0;
+let initialized = false, refreshInProgress = false, editor = null, busy = false;
+let leaders = [], media = [], stats = null, rankingSignature = null;
+const controls = [];
+const validPath = p => /^media\/[a-f0-9-]+\.(png|jpg|webp)$/.test(p || '');
+const imageUrl = p => `${ROOT}/storage/v1/object/public/armani-media/${p}`;
+const fmt = n => Number(n).toLocaleString('uk-UA');
+function setAdmin(value) {
+  admin = value; $('adminBadge').hidden = !admin; $('editBtn').hidden = !admin; $('uploadBtn').hidden = !admin;
+  controls.forEach(b => b.hidden = !admin);
+  if (!admin) { if ($('contentEditor').open) closeModal($('contentEditor')); if ($('editModal').open) closeModal($('editModal')); }
+}
+function createControls() {
+  document.querySelectorAll('#team .leadership-card').forEach((card,i) => addButton(card,()=>editLeader(i+1)));
+  for(const [id,prefix] of [['cars','fleet'],['outfits','dress']]) {
+    document.querySelectorAll(`#${id} .media-card`).forEach((card,i)=>{
+      const wrapper=document.createElement('div'); wrapper.className='media-admin-wrap';
+      card.before(wrapper);wrapper.append(card);addButton(wrapper,()=>editMedia(`${prefix}-${i}`));
+    });
+  }
+  $('uploadBtn').onclick=()=>editMedia('estate');
+  $('editBtn').onclick=()=>{
+    if(!admin || !stats)return;
+    $('pointsInput').value=stats.points;
+    $('membersInput').value=stats.members;$('vehiclesInput').value=stats.vehicles;
+    $('statsFeedback').textContent='';openModal($('editModal'));
+  };
+}
+function addButton(parent,handler){
+  const b=document.createElement('button');b.type='button';b.className='btn admin-edit';b.textContent='✎ Редагувати';b.hidden=true;
+  b.addEventListener('click',handler);parent.append(b);controls.push(b);
+}
+function editLeader(slot){
+  const row=leaders.find(r=>r.slot===slot);if(!admin||!row||busy)return;
+  editor={kind:'leader',id:slot};$('contentEditorTitle').textContent='Редагувати вищий склад';
+  $('contentTitle').value=row.nickname;$('contentTitle').maxLength=40;$('contentDescription').value=row.description;
+  $('contentDescription').maxLength=100;$('contentRole').value=row.role;
+  $('vehicleFields').hidden=true;$('roleField').hidden=false;$('photoField').hidden=false;startEditor();
+  const preview=$('leaderPhotoPreview');preview.hidden=!validPath(row.image_path);
+  if(!preview.hidden)preview.src=imageUrl(row.image_path);
+}
+function editMedia(slot){
+  const row=media.find(r=>r.slot===slot);if(!admin||!row||busy)return;
+  editor={kind:'media',id:slot};$('contentEditorTitle').textContent='Фото та опис';
+  $('contentTitle').value=row.title;$('contentTitle').maxLength=80;$('contentDescription').value=row.description;
+  $('contentDescription').maxLength=1000;$('roleField').hidden=true;$('photoField').hidden=false;startEditor();
+  $('vehicleFields').hidden=!slot.startsWith('fleet-');
+  if(slot.startsWith('fleet-'))fillVehicleFields(row.vehicle_specs||{});
+}
+
+const vehicleFields={category:'vehicleCategory',quantity:'vehicleQuantity',minRank:'vehicleRank',horsepower:'vehiclePower',engine:'vehicleEngine',drivetrain:'vehicleDrive',maxSpeedKmh:'vehicleSpeed',acceleration:'vehicleAcceleration',seats:'vehicleSeats',location:'vehicleLocation'};
+const vehicleDefaults={category:'Преміум',quantity:1,minRank:1,horsepower:'Уточнюється',engine:'Уточнюється',drivetrain:'Уточнюється',maxSpeedKmh:0,acceleration:'Уточнюється',seats:'Уточнюється',location:'Буде додано'};
+function fillVehicleFields(specs){
+  for(const [key,id] of Object.entries(vehicleFields))$(id).value=specs[key]??vehicleDefaults[key];
+  $('vehiclePlates').value=Array.isArray(specs.plates)?specs.plates.join('\n'):'';
+}
+function readVehicleFields(){
+  const result={};
+  for(const [key,id] of Object.entries(vehicleFields))result[key]=$(id).value.trim();
+  for(const [key,min,max] of [['quantity',1,999],['minRank',1,999],['maxSpeedKmh',0,2000]]){
+    const value=Number(result[key]);if(result[key]===''||!Number.isInteger(value)||value<min||value>max)throw Error('Перевірте кількість, ранг і швидкість: потрібні цілі числа в межах полів.');result[key]=value;
+  }
+  for(const [key,max] of [['category',40],['horsepower',60],['engine',60],['drivetrain',60],['acceleration',60],['seats',60],['location',150]]){
+    if(!result[key]||result[key].length>max)throw Error('Заповніть усі характеристики. Якщо даних немає — вкажіть «Уточнюється».');
+  }
+  result.plates=[...new Set($('vehiclePlates').value.split(/\r?\n/).map(s=>s.trim()).filter(Boolean))];
+  if(result.plates.length>30||result.plates.some(p=>p.length>24))throw Error('Максимум 30 номерів, кожен до 24 символів.');
+  return result;
+}
+
+function startEditor(){$('leaderPhotoPreview').hidden=true;$('leaderPhotoPreview').removeAttribute('src');$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
+function paint() {
+  const cards=[...document.querySelectorAll('#team .leadership-card')];
+  leaders.forEach(row=>{
+    const card=cards[row.slot-1];if(!card)return;
+    card.querySelector('strong').textContent=row.nickname;card.querySelector('small').textContent=row.description;
+    card.querySelector('.rank').textContent=row.role;card.querySelector('.avatar>span').textContent=Array.from(row.nickname)[0]||'A';
+    const avatar=card.querySelector('.avatar');let photo=avatar.querySelector('img');
+    if(validPath(row.image_path)){
+      if(!photo){photo=document.createElement('img');avatar.append(photo);}
+      photo.src=imageUrl(row.image_path);photo.alt=`Персонаж ${row.nickname}`;photo.loading='lazy';
+      avatar.classList.add('has-photo');
+    }else{photo?.remove();avatar.classList.remove('has-photo');}
+  });
+  media.forEach(row=>{
+    if(row.slot==='estate'){
+      if(validPath(row.image_path)){
+        let img=$('estatePhoto').querySelector('img');if(!img){img=document.createElement('img');$('estatePhoto').prepend(img);}
+        img.src=imageUrl(row.image_path);img.alt=row.title;
+      }
+      document.querySelector('.estate-info h3').textContent=row.title;
+      document.querySelector('.estate-info>p').textContent=row.description;return;
+    }
+    const [kind,index]=row.slot.split('-');const card=document.querySelectorAll(kind==='fleet'?'#cars .media-card':'#outfits .media-card')[Number(index)];
+    if(!card)return;card.querySelector('h3').textContent=row.title;card.querySelector('small').textContent=row.description;
+    card.dataset.description=row.description;card.setAttribute('aria-label',`Переглянути ${row.title}`);
+    if(validPath(row.image_path)){
+      const art=card.querySelector('.car-art');let img=art.querySelector('img');
+      if(!img){img=document.createElement('img');art.replaceChildren(img);}
+      img.src=imageUrl(row.image_path);img.alt=row.title;img.loading='lazy';
+    }
+  });
+  document.dispatchEvent(new CustomEvent('armani:fleet-data',{detail:media.filter(row=>row.slot.startsWith('fleet-'))}));
+  if(stats){
+    $('familyPoints').textContent=fmt(stats.points);
+    $('familyMembers').textContent=fmt(stats.members);$('familyVehicles').textContent=fmt(stats.vehicles);
+    const label=stats.source==='discord'?'Discord-бот':stats.source==='manual'?'Адміністратор':'Демонстраційні дані';
+    $('syncNote').textContent=`${label} · ${new Date(stats.updated_at).toLocaleString('uk-UA')} · перевірка оновлень кожні 30 с`;
+    document.querySelector('.update-mode').textContent=label;
+  }
+}
+function paintRanking(rows){
+  const signature=JSON.stringify(rows);if(signature===rankingSignature)return;rankingSignature=signature;
+  const list=document.querySelector('.leaderboard-list');list.replaceChildren();
+  if(!rows.length){const empty=document.createElement('li');empty.className='toprow';empty.textContent='Бот ще не передав рейтинг.';list.append(empty);return;}
+  const max=rows[0].xp||1;
+  rows.slice(0,10).forEach((r,i)=>{
+    const li=document.createElement('li');li.className='toprow '+(['first','second','third'][i] || '');
+    const position=document.createElement('span');position.className='position';position.textContent=String(i+1).padStart(2,'0');
+    const player=document.createElement('div');player.className='player';const name=document.createElement('strong');name.textContent=r.nickname;
+    const track=document.createElement('span');track.className='xp-track';track.setAttribute('aria-hidden','true');const bar=document.createElement('i');bar.style.width=`${Math.min(100,r.xp/max*100)}%`;track.append(bar);player.append(name,track);
+    const xp=document.createElement('div');xp.className='xp-value';xp.textContent=fmt(r.xp)+' RP';li.append(position,player,xp);list.append(li);
+  });
+  document.dispatchEvent(new Event('armani:ranking-change'));
+}
+async function refresh(){
+  if(!db||refreshInProgress)return;refreshInProgress=true;
+  try{
+    const results=await Promise.all([
+      db.from('armani_leadership').select('*').order('slot'),db.from('armani_media').select('*'),
+      db.from('armani_stats').select('*').eq('id',1).single(),db.from('armani_rp_leaderboard').select('nickname,xp:rp_balance').order('position').limit(10),
+      db.from('armani_rp_sync_status').select('updated_at').eq('id',1).single()
+    ]);
+    if(results.some(r=>r.error))throw Error('content_unavailable');
+    leaders=results[0].data;media=results[1].data;stats=results[2].data;paint();paintRanking(results[3].data);
+    document.querySelector('.premium-foot>span:last-child').textContent='TOP 10';
+    document.querySelector('.leaderboard-head>span:last-child').textContent='БАЛАНС RP';
+    const synced=results[4].data.updated_at;
+    document.querySelector('.update-mode').textContent='Discord · RP';
+    $('syncNote').textContent=synced ? `RP із Discord · синхронізовано ${new Date(synced).toLocaleString('uk-UA')} · перевірка кожні 30 с` : 'Бот ще не передав RP-рейтинг.';
+  }catch{$('syncNote').textContent='Спільні дані недоступні. Показано останні завантажені дані або ескіз. Власнику: перевірте встановлення SQL.';}
+  finally{refreshInProgress=false;}
+}
+async function validateImage(file){
+  if(!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>5242880)throw Error('Оберіть JPG, PNG або WebP до 5 МБ.');
+  const bytes=new Uint8Array(await file.slice(0,12).arrayBuffer());
+  const png=bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71;
+  const jpg=bytes[0]===255&&bytes[1]===216&&bytes[2]===255;
+  const webp=String.fromCharCode(...bytes.slice(0,4))==='RIFF'&&String.fromCharCode(...bytes.slice(8,12))==='WEBP';
+  if(!(file.type==='image/png'&&png||file.type==='image/jpeg'&&jpg||file.type==='image/webp'&&webp))throw Error('Файл не відповідає формату зображення.');
+}
+$('contentForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!admin||!editor||busy)return;
+  busy=true;$('contentSave').disabled=true;$('contentFeedback').textContent='Збереження…';
+  let newPath=null;const selection={...editor};
+  try{
+    const title=$('contentTitle').value.trim(),description=$('contentDescription').value.trim();
+    if(!title)throw Error('Вкажіть назву або нікнейм.');
+    if(selection.kind==='leader'){
+      if(title.length<2||title.length>40)throw Error('Нікнейм має містити від 2 до 40 символів.');
+      const update={nickname:title,description,role:$('contentRole').value};
+      const file=$('contentPhoto').files[0];
+      if(file){
+        await validateImage(file);
+        const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[file.type];
+        newPath=`media/${crypto.randomUUID()}.${ext}`;
+        const {error}=await db.storage.from('armani-media').upload(newPath,file,{contentType:file.type,upsert:false});
+        if(error)throw Error('Не вдалося завантажити фото. Перевірте права адміністратора та Storage.');
+        update.image_path=newPath;
+      }
+      const {data,error}=await db.from('armani_leadership').update(update).eq('slot',selection.id).select('slot');
+      if(error||!data?.length){
+        if(newPath){try{await db.storage.from('armani-media').remove([newPath]);}catch{}}
+        throw Error('Не вдалося зберегти. Перевірте права адміністратора й виконання SQL-оновлення для чотирьох карток.');
+      }
+    }else{
+      const file=$('contentPhoto').files[0];const update={title,description};
+      if(selection.id.startsWith('fleet-'))update.vehicle_specs=readVehicleFields();
+      if(file){
+        await validateImage(file);const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[file.type];
+        newPath=`media/${crypto.randomUUID()}.${ext}`;
+        const {error}=await db.storage.from('armani-media').upload(newPath,file,{contentType:file.type,upsert:false});
+        if(error)throw Error('Завантаження фото не вдалося. Перевірте права та Storage.');
+        update.image_path=newPath;
+      }
+      const {data,error}=await db.from('armani_media').update(update).eq('slot',selection.id).select('slot');
+      if(error||!data?.length){if(newPath)await db.storage.from('armani-media').remove([newPath]);throw Error(error?.code==='PGRST204'||error?.code==='42703'?'Спочатку виконайте 06-fleet-catalog.sql у Supabase SQL Editor.':'Не вдалося зберегти картку. Перевірте права адміністратора.');}
+      // Old images are kept, so parallel edits never delete another saved image.
+    }
+    $('contentFeedback').textContent='Збережено для всіх відвідувачів.';await refresh();
+  }catch(error){$('contentFeedback').textContent=error.message||'Помилка збереження. Спробуйте ще раз.';}
+  finally{busy=false;$('contentSave').disabled=false;}
+});
+let savingStats=false;
+$('statsForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(!admin||!db||!stats||savingStats)return;
+  const submit=e.currentTarget.querySelector('[type=submit]');
+  savingStats=true;submit.disabled=true;$('statsFeedback').textContent='Збереження…';
+  try{
+    const values={};
+    for(const [key,id,max] of [['points','pointsInput',999999999],['members','membersInput',100000],['vehicles','vehiclesInput',100000]]){
+      const raw=$(id).value.trim(),value=Number(raw);
+      if(!raw||!Number.isInteger(value)||value<0||value>max)throw Error('Введіть цілі невід’ємні числа в межах полів.');
+      values[key]=value;
+    }
+    // Preserve the existing backend rank for compatibility; it is no longer
+    // displayed or editable in the family statistics block.
+    const {error}=await db.rpc('armani_edit_stats',{p_rank:stats.family_rank,p_points:values.points,p_members:values.members,p_vehicles:values.vehicles});
+    if(error)throw Error('Не вдалося зберегти. Перевірте з’єднання та права адміністратора.');
+    stats={...stats,...values,source:'manual',updated_at:new Date().toISOString()};
+    $('familyMembers').textContent=fmt(values.members);$('familyVehicles').textContent=fmt(values.vehicles);$('familyPoints').textContent=fmt(values.points);
+    $('statsFeedback').textContent='Збережено для всіх відвідувачів.';
+    await refresh();
+  }catch(error){$('statsFeedback').textContent=error.message||'Помилка збереження.';}
+  finally{savingStats=false;submit.disabled=false;}
+});
+document.addEventListener('armani:session',async e=>{
+  db=e.detail.client;const user=e.detail.user;const nextId=user?.id||null;
+  const version=++permissionRevision;currentId=nextId;setAdmin(false);
+  if(!initialized){initialized=true;createControls();await refresh();}
+  if(version!==permissionRevision||!currentId)return;
+  const {data,error}=await db.rpc('armani_is_admin');
+  if(version===permissionRevision)setAdmin(!error&&data===true);
+});
+setInterval(()=>{if(!document.hidden)refresh();},30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
+
+</script></body></html>
