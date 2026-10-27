@@ -251,11 +251,25 @@ dialog[open].is-closing::backdrop{animation:backdrop-exit 240ms ease-in both}
 .stats-actions{display:flex;justify-content:flex-end;margin-top:12px}
 #editBtn{font-size:12px;padding:10px 15px}
 @media(max-width:600px){#familyStats{grid-template-columns:minmax(0,1fr)}#familyStats .stat{border-right:0;border-bottom:1px solid var(--line)}#familyStats .stat:last-child{border-bottom:0}}
+</style><style id="armani-estate-carousel">
+#estate #estatePhoto:has(>img){display:block;position:relative;width:100%;height:auto;aspect-ratio:16/9;min-height:0;overflow:hidden;background:#040712}
+#estate #estatePhoto>img{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain;max-height:none}
+#estate #estatePhoto:has(>img)>.placeholder{display:none}
+#estatePhoto .estate-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;display:grid;place-items:center;width:48px;height:58px;padding:0;border:1px solid #d4af3799;border-radius:10px;background:#040712c9;color:#f3d78b;font-size:38px;line-height:1;backdrop-filter:blur(10px);cursor:pointer;transition:background .2s,border-color .2s}
+#estatePhoto .estate-arrow:hover{background:#18305ce6;border-color:#d4af37}
+#estatePhoto .estate-arrow-prev{left:16px}#estatePhoto .estate-arrow-next{right:16px}
+#estatePhoto:focus-visible,#estatePhoto .estate-arrow:focus-visible{outline:2px solid #e8cf89;outline-offset:-4px}
+#estateCounter{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:3;padding:7px 14px;border:1px solid #d4af3755;border-radius:20px;background:#040712cf;color:#f3dfaa;font-size:12px;font-variant-numeric:tabular-nums}
+#contentEditor:has(#estateGalleryEditor:not([hidden])){width:min(740px,calc(100vw - 24px));max-height:90vh;overflow-y:auto}
+#estatePhotoList{display:grid;gap:9px;margin:12px 0}.estate-edit-photo{display:flex;gap:8px;align-items:center;padding:9px;border:1px solid #d4af3733;border-radius:8px;background:#071024}
+.estate-edit-photo img{width:75px;height:50px;object-fit:contain;background:#040712;border-radius:5px}.estate-edit-photo span{flex:1;min-width:0;overflow-wrap:anywhere;font-size:11px;color:#b7c5dc}.estate-edit-photo .btn{margin:0;padding:8px;font-size:11px}.estate-edit-photo .btn:disabled{opacity:.4;cursor:default}
+@media(max-width:600px){#estatePhoto .estate-arrow{width:34px;height:44px;font-size:30px}#estatePhoto .estate-arrow-prev{left:8px}#estatePhoto .estate-arrow-next{right:8px}#estateCounter{bottom:8px;padding:5px 10px}.estate-edit-photo{flex-wrap:wrap}.estate-edit-photo span{flex-basis:calc(100% - 95px)}}
+@media(prefers-reduced-motion:reduce){#estatePhoto .estate-arrow{transition:none}}
 </style></head><body>
 <header><div class="wrap"><a class="brand" href="#home"><span class="mark">♛</span> ARMANI</a><nav class="nav" aria-label="Навігація"><a href="#estate"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 9 9-6 9 6M5 9v11h14V9M9 20v-7h6v7"/></svg>Маєток</a><a href="#garage"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 10 2-5h12l2 5M3 10h18v8H3zM6 18v3m12-3v3M6 14h2m8 0h2"/></svg>Автопарк</a><a href="#team"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3"/><path d="M6 21v-3a6 6 0 0 1 12 0v3M3 11a3 3 0 0 0 3 3m15-3a3 3 0 0 1-3 3"/></svg>Склад сім’ї</a><a href="#ranking"><svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h8v6a4 4 0 0 1-8 0V3ZM8 5H4v3a4 4 0 0 0 4 4m8-7h4v3a4 4 0 0 1-4 4m-4 1v5m-4 3h8"/></svg>Рейтинг</a><a href="#rules">Правила</a><a href="#community">Discord</a></nav><div class="account-actions"><span id="accountName" hidden></span><button class="btn discord" id="discordLogin">Доступ до заявок</button><span id="adminBadge" hidden>ADMIN</span><button class="btn" id="profileOpen" hidden>Мій профіль</button><button class="btn" id="discordLogout" hidden>Вийти</button></div></div></header><div id="authStatus" role="status" hidden></div>
 <main class="wrap" id="home"><section class="hero"><div><div class="eyebrow"><span class="dot"></span> NG ROLEPLAY</div><h1>ARMANI</h1><h2>Сім’я понад усе.</h2><p>Один колір. Спільні принципи. Власна історія.<br>Місце тих, хто обирає вірність, повагу<br>та рух уперед разом.</p><div class="actions"><a class="btn primary" href="#estate">Територія сім’ї <span>↗</span></a></div></div><div class="crest"><img src="armani.png" alt="Синій королівський герб Armani з короною"><span>LOYALTY · RESPECT · FAMILY</span></div></section>
 <div class="stats" id="familyStats" data-version="stats-20261027"><div class="stat"><span class="icon">♧</span><div><strong id="familyMembers">—</strong><small>Учасники сім’ї</small></div></div><div class="stat"><span class="icon">◇</span><div><strong id="familyVehicles">—</strong><small>Авто у гаражі</small></div></div><div class="stat"><span class="icon">✧</span><div><strong id="familyPoints">—</strong><small>Очки сім’ї</small></div></div></div><div class="stats-actions"><button class="btn" type="button" id="editBtn" aria-controls="editModal" hidden>✎ Редагувати статистику</button></div>
-<section class="section" id="estate"><div class="heading"><div><div class="kicker">01 / НАША ТЕРИТОРІЯ</div><h2>Місце, яке ми звемо домом</h2></div><span class="textlink">ARMANI RESIDENCE ↗</span></div><div class="estate"><div class="estate-photo" id="estatePhoto"><div class="placeholder"><svg viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M10 88h120M25 88V43h90v45M16 43l54-30 54 30H16ZM35 52h13v22H35zm29 0h13v36H64zm29 0h13v22H93M53 38h34M21 91h98M12 97h116"/><path d="M31 44v42m24-42v42m29-42v42m24-42v42" opacity=".4"/></svg><p>МІСЦЕ ДЛЯ ВАШОГО СКРИНШОТА</p></div><span class="tag">ТЕРИТОРІЯ ARMANI</span></div><div class="estate-info"><div class="eyebrow">ПРИВАТНА РЕЗИДЕНЦІЯ</div><h3>Маєток сім’ї</h3><p>Тут починаються наші плани й закінчуються довгі вечори в місті. Додайте скриншот, щоб показати територію Armani.</p><div class="details"><div><strong>Локація</strong><small>Буде додано</small></div><div><strong>Доступ</strong><small>Для членів сім’ї</small></div></div><button class="btn" id="uploadBtn" hidden>＋ Додати скриншот</button><input id="upload" type="file" accept="image/png,image/jpeg,image/webp" hidden><div class="demo">Скриншот маєтку доступний усім. Змінює адміністратор.</div></div></div></section>
+<section class="section" id="estate"><div class="heading"><div><div class="kicker">01 / НАША ТЕРИТОРІЯ</div><h2>Місце, яке ми звемо домом</h2></div><span class="textlink">ARMANI RESIDENCE ↗</span></div><div class="estate"><div class="estate-photo" id="estatePhoto" tabindex="0" role="region" aria-roledescription="карусель" aria-label="Скриншоти маєтку"><button id="estatePrevious" class="estate-arrow estate-arrow-prev" type="button" aria-label="Попереднє фото" hidden>‹</button><button id="estateNext" class="estate-arrow estate-arrow-next" type="button" aria-label="Наступне фото" hidden>›</button><span id="estateCounter" aria-live="polite" aria-atomic="true" hidden></span><div class="placeholder"><svg viewBox="0 0 140 100" fill="none" stroke="currentColor" stroke-width="1"><path d="M10 88h120M25 88V43h90v45M16 43l54-30 54 30H16ZM35 52h13v22H35zm29 0h13v36H64zm29 0h13v22H93M53 38h34M21 91h98M12 97h116"/><path d="M31 44v42m24-42v42m29-42v42m24-42v42" opacity=".4"/></svg><p>МІСЦЕ ДЛЯ ВАШОГО СКРИНШОТА</p></div><span class="tag">ТЕРИТОРІЯ ARMANI</span></div><div class="estate-info"><div class="eyebrow">ПРИВАТНА РЕЗИДЕНЦІЯ</div><h3>Маєток сім’ї</h3><p>Тут починаються наші плани й закінчуються довгі вечори в місті. Додайте скриншот, щоб показати територію Armani.</p><div class="details"><div><strong>Локація</strong><small>Буде додано</small></div><div><strong>Доступ</strong><small>Для членів сім’ї</small></div></div><button class="btn" id="uploadBtn" hidden>✎ Редагувати галерею</button><input id="upload" type="file" accept="image/png,image/jpeg,image/webp" hidden><div class="demo">Скриншот маєтку доступний усім. Змінює адміністратор.</div></div></div></section>
 <section class="section" id="garage"><div class="heading"><div><div class="kicker">02 / СІМЕЙНИЙ ГАРАЖ</div><h2>Автопарк & дрескод</h2></div><div class="gallery-tabs" role="group" aria-label="Категорія галереї"><button class="gallery-tab active" aria-pressed="true" data-gallery="fleet">Автопарк</button><button class="gallery-tab" aria-pressed="false" data-gallery="dress">Дрескод</button></div></div><p class="sub gallery-intro">Стиль сім’ї — у кожній деталі. Оберіть картку, щоб переглянути опис.</p><div id="fleetExperience"><div id="fleetFilters" role="group" aria-label="Категорії автопарку"></div><div class="cars" id="cars"></div></div><div class="cars" id="outfits" hidden></div><div class="demo">Концепти для ескізу. Реальні автомобілі, скриншоти й дрескод потребують підтвердження.</div></section>
 <div class="lower premium-grid"><section class="section" id="team"><div class="heading"><div><div class="kicker">03 / ЛЮДИ ARMANI</div><h2>Вищий склад</h2></div><span class="premium-caption">THE INNER CIRCLE</span></div><div class="leadership-cards">
 <article class="person leader leadership-card"><div class="card-top"><span>ARMANI / 01</span><span aria-hidden="true">♛</span></div><div class="avatar"><span>A</span><i aria-hidden="true">♛</i></div><div class="card-identity"><strong>Alessandro Armani</strong><small>Лідер сім’ї</small></div><span class="rank">LEADER</span><div class="card-bottom">ВІРНІСТЬ <span aria-hidden="true">◇</span></div></article>
@@ -275,7 +289,7 @@ dialog[open].is-closing::backdrop{animation:backdrop-exit 240ms ease-in both}
 
 <dialog id="applicationAccess" aria-describedby="accessDescription"><button class="close" aria-label="Закрити вікно">×</button><div class="access-emblem" aria-hidden="true">♛</div><div class="access-kicker">ARMANI FAMILY · MEMBERS AREA</div><h2>Доступ до заявок</h2><p id="accessDescription">Увійди через Discord і налаштуй профіль.</p><div class="access-field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2"/></svg><input disabled aria-label="Ім’я Прізвище та Static ID" value="Ім'я Прізвище - Static ID"></div><button id="accessDiscordLogin" class="discord-access-btn" disabled><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M20.3 4.4a20 20 0 0 0-4.9-1.5l-.6 1.2a18.1 18.1 0 0 0-5.6 0l-.6-1.2a20 20 0 0 0-4.9 1.5C.6 9 .1 13.5.4 17.9a20 20 0 0 0 6 3l1.3-2.1-1.9-.9.5-.4a14 14 0 0 0 11.4 0l.5.4-1.9.9 1.3 2.1a20 20 0 0 0 6-3c.4-5.1-.7-9.6-3.3-13.5ZM8 15.2c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Zm8 0c-1.2 0-2.1-1.1-2.1-2.4s.9-2.4 2.1-2.4 2.1 1.1 2.1 2.4-.9 2.4-2.1 2.4Z"/></svg><span id="accessButtonLabel">Підключення…</span><span class="access-arrow" aria-hidden="true">↗</span></button><p id="accessMessage" role="status" hidden></p><div class="access-footer"><span></span>LOYALTY · RESPECT · FAMILY<span></span></div></dialog>
 <dialog id="profileModal" aria-describedby="profileDescription"><button class="close" aria-label="Закрити профіль">×</button><div class="access-kicker">ARMANI FAMILY · ПРОФІЛЬ ГРАВЦЯ</div><h2>Твій персонаж</h2><p id="profileDescription">Вкажи нікнейм персонажа та Static ID у NG.</p><form id="characterForm"><label for="characterNickname">Нікнейм персонажа</label><input id="characterNickname" name="nickname" placeholder="Наприклад, Alessandro Armani" minlength="2" maxlength="40" autocomplete="off" required><label for="characterStatic">Static ID</label><input id="characterStatic" name="static_id" placeholder="Наприклад, 12345" inputmode="numeric" pattern="[0-9]{1,12}" maxlength="12" autocomplete="off" required><p class="profile-help">Дані вводить гравець. Підтвердження через NG поки не підключено.</p><p id="profileFeedback" role="status" hidden></p><button class="btn primary" id="profileSave" type="submit">Зберегти профіль</button></form></dialog>
-<dialog id="contentEditor"><button class="close" aria-label="Закрити редактор">×</button><div class="access-kicker">ARMANI · ADMIN</div><h2>Редактор</h2><form id="contentForm"><label for="contentTitle">Назва / нікнейм</label><input id="contentTitle" required maxlength="80"><div id="roleField" hidden><label for="contentRole">Роль</label><select id="contentRole"><option>LEADER</option><option>DEPUTY</option><option>CURATOR</option></select></div><label for="contentDescription">Опис</label><textarea id="contentDescription" rows="3" maxlength="1000"></textarea><fieldset id="vehicleFields" hidden><legend>Характеристики та номери авто</legend><div class="vehicle-editor-grid"><div><label for="vehicleCategory">Категорія</label><input id="vehicleCategory" type="text" maxlength="40"></div><div><label for="vehicleQuantity">Кількість авто</label><input id="vehicleQuantity" type="number" min="1" max="999" step="1"></div><div><label for="vehicleRank">Доступ із рангу</label><input id="vehicleRank" type="number" min="1" max="999" step="1"></div><div><label for="vehiclePower">Потужність (наприклад 771 к.с.)</label><input id="vehiclePower" type="text" maxlength="60"></div><div><label for="vehicleEngine">Двигун</label><input id="vehicleEngine" type="text" maxlength="60"></div><div><label for="vehicleDrive">Привід</label><input id="vehicleDrive" type="text" maxlength="60"></div><div><label for="vehicleSpeed">Максимальна швидкість, км/год</label><input id="vehicleSpeed" type="number" min="0" max="2000" step="1"></div><div><label for="vehicleAcceleration">Розгін 0–100 (наприклад 3.2 с)</label><input id="vehicleAcceleration" type="text" maxlength="60"></div><div><label for="vehicleSeats">Салон (наприклад 4 місця)</label><input id="vehicleSeats" type="text" maxlength="60"></div><div><label for="vehicleLocation">Місце знаходження</label><input id="vehicleLocation" type="text" maxlength="150"></div><div class="vehicle-editor-wide"><label for="vehiclePlates">Номерні знаки — кожен з нового рядка</label><textarea id="vehiclePlates" rows="4" maxlength="1000" placeholder="AA 1488 AA&#10;ARMANI 01"></textarea><p class="vehicle-editor-help">До 30 номерів, кожен до 24 символів. Кількість авто вказується окремо. Швидкість 0 означає «Уточнюється».</p></div></div></fieldset><div id="photoField" hidden><label for="contentPhoto">Фото / скриншот персонажа</label><img id="leaderPhotoPreview" alt="Поточне фото персонажа" hidden><input id="contentPhoto" type="file" accept="image/jpeg,image/png,image/webp"><p class="demo">JPG, PNG або WebP · до 5 МБ. Зображення буде публічним.</p></div><p id="contentFeedback" role="status"></p><button class="btn primary" id="contentSave" type="submit">Зберегти для всіх</button></form></dialog>
+<dialog id="contentEditor"><button class="close" aria-label="Закрити редактор">×</button><div class="access-kicker">ARMANI · ADMIN</div><h2>Редактор</h2><form id="contentForm"><label for="contentTitle">Назва / нікнейм</label><input id="contentTitle" required maxlength="80"><div id="roleField" hidden><label for="contentRole">Роль</label><select id="contentRole"><option>LEADER</option><option>DEPUTY</option><option>CURATOR</option></select></div><label for="contentDescription">Опис</label><textarea id="contentDescription" rows="3" maxlength="1000"></textarea><fieldset id="vehicleFields" hidden><legend>Характеристики та номери авто</legend><div class="vehicle-editor-grid"><div><label for="vehicleCategory">Категорія</label><input id="vehicleCategory" type="text" maxlength="40"></div><div><label for="vehicleQuantity">Кількість авто</label><input id="vehicleQuantity" type="number" min="1" max="999" step="1"></div><div><label for="vehicleRank">Доступ із рангу</label><input id="vehicleRank" type="number" min="1" max="999" step="1"></div><div><label for="vehiclePower">Потужність (наприклад 771 к.с.)</label><input id="vehiclePower" type="text" maxlength="60"></div><div><label for="vehicleEngine">Двигун</label><input id="vehicleEngine" type="text" maxlength="60"></div><div><label for="vehicleDrive">Привід</label><input id="vehicleDrive" type="text" maxlength="60"></div><div><label for="vehicleSpeed">Максимальна швидкість, км/год</label><input id="vehicleSpeed" type="number" min="0" max="2000" step="1"></div><div><label for="vehicleAcceleration">Розгін 0–100 (наприклад 3.2 с)</label><input id="vehicleAcceleration" type="text" maxlength="60"></div><div><label for="vehicleSeats">Салон (наприклад 4 місця)</label><input id="vehicleSeats" type="text" maxlength="60"></div><div><label for="vehicleLocation">Місце знаходження</label><input id="vehicleLocation" type="text" maxlength="150"></div><div class="vehicle-editor-wide"><label for="vehiclePlates">Номерні знаки — кожен з нового рядка</label><textarea id="vehiclePlates" rows="4" maxlength="1000" placeholder="AA 1488 AA&#10;ARMANI 01"></textarea><p class="vehicle-editor-help">До 30 номерів, кожен до 24 символів. Кількість авто вказується окремо. Швидкість 0 означає «Уточнюється».</p></div></div></fieldset><div id="estateGalleryEditor" hidden><label for="estateFiles">Скриншоти маєтку</label><input id="estateFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple><p class="demo">До 10 фото · JPG, PNG або WebP · до 5 МБ кожне. Нові фото додаються до списку. Зміни застосуються після збереження.</p><p id="estateDraftCount"></p><div id="estatePhotoList"></div></div><div id="photoField" hidden><label for="contentPhoto">Фото / скриншот персонажа</label><img id="leaderPhotoPreview" alt="Поточне фото персонажа" hidden><input id="contentPhoto" type="file" accept="image/jpeg,image/png,image/webp"><p class="demo">JPG, PNG або WebP · до 5 МБ. Зображення буде публічним.</p></div><p id="contentFeedback" role="status"></p><button class="btn primary" id="contentSave" type="submit">Зберегти для всіх</button></form></dialog>
 <dialog id="editModal"><button class="close" aria-label="Закрити">×</button><h2>Статистика сім’ї</h2><p>Зміни статистики зберігаються для всіх відвідувачів. Наступна синхронізація бота може оновити ці значення.</p><form id="statsForm"><label for="pointsInput">Очки сім’ї</label><input id="pointsInput" type="number" min="0" max="999999999" required><label for="membersInput">Учасників сім’ї</label><input id="membersInput" type="number" min="0" max="100000" required><label for="vehiclesInput">Авто в гаражі</label><input id="vehiclesInput" type="number" min="0" max="100000" required><p id="statsFeedback" role="status"></p><button class="btn primary" type="submit">Зберегти зміни</button></form></dialog><div id="notice" role="status"></div>
 <dialog id="serverSettings"><button class="close" aria-label="Закрити">×</button><h2>Налаштування Discord</h2><p>Налаштування цього ескізу зберігаються лише у вашому браузері. Зміна запрошення тут діє лише у вашому браузері.</p><form id="serverForm"><label for="inviteInput">Посилання або код запрошення Discord</label><input id="inviteInput" placeholder="https://discord.gg/…" autocomplete="off" maxlength="200"><p id="settingsError" class="form-error" role="alert"></p><button class="btn primary" type="submit">Зберегти</button></form></dialog>
 <dialog id="galleryModal"><button class="close" aria-label="Закрити">×</button><div class="gallery-preview" id="galleryPreview"></div><div class="eyebrow">ARMANI COLLECTION · КОНЦЕПТ</div><h2 id="mediaTitle">Колекція</h2><p id="mediaDescription"></p><p class="demo">Ілюстративний приклад для ескізу, не затверджений склад сім’ї.</p></dialog>
@@ -412,6 +426,7 @@ function editMedia(slot){
   $('contentDescription').maxLength=1000;$('roleField').hidden=true;$('photoField').hidden=false;startEditor();
   $('vehicleFields').hidden=!slot.startsWith('fleet-');
   if(slot.startsWith('fleet-'))fillVehicleFields(row.vehicle_specs||{});
+  if(slot==='estate'){$('photoField').hidden=true;$('estateGalleryEditor').hidden=false;estateDraft=estatePaths(row).map(path=>({path}));renderEstateDraft();}
 }
 
 const vehicleFields={category:'vehicleCategory',quantity:'vehicleQuantity',minRank:'vehicleRank',horsepower:'vehiclePower',engine:'vehicleEngine',drivetrain:'vehicleDrive',maxSpeedKmh:'vehicleSpeed',acceleration:'vehicleAcceleration',seats:'vehicleSeats',location:'vehicleLocation'};
@@ -434,7 +449,7 @@ function readVehicleFields(){
   return result;
 }
 
-function startEditor(){$('leaderPhotoPreview').hidden=true;$('leaderPhotoPreview').removeAttribute('src');$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
+function startEditor(){clearEstateDraft();$('estateGalleryEditor').hidden=true;$('photoField').hidden=false;$('leaderPhotoPreview').hidden=true;$('leaderPhotoPreview').removeAttribute('src');$('contentPhoto').value='';$('contentFeedback').textContent='';openModal($('contentEditor'));}
 function paint() {
   const cards=[...document.querySelectorAll('#team .leadership-card')];
   leaders.forEach(row=>{
@@ -450,10 +465,7 @@ function paint() {
   });
   media.forEach(row=>{
     if(row.slot==='estate'){
-      if(validPath(row.image_path)){
-        let img=$('estatePhoto').querySelector('img');if(!img){img=document.createElement('img');$('estatePhoto').prepend(img);}
-        img.src=imageUrl(row.image_path);img.alt=row.title;
-      }
+      updateEstate(row);
       document.querySelector('.estate-info h3').textContent=row.title;
       document.querySelector('.estate-info>p').textContent=row.description;return;
     }
@@ -522,7 +534,9 @@ $('contentForm').addEventListener('submit',async e=>{
   try{
     const title=$('contentTitle').value.trim(),description=$('contentDescription').value.trim();
     if(!title)throw Error('Вкажіть назву або нікнейм.');
-    if(selection.kind==='leader'){
+    if(selection.kind==='media'&&selection.id==='estate'){
+      await saveEstateGallery(title,description);
+    }else if(selection.kind==='leader'){
       if(title.length<2||title.length>40)throw Error('Нікнейм має містити від 2 до 40 символів.');
       const update={nickname:title,description,role:$('contentRole').value};
       const file=$('contentPhoto').files[0];
@@ -555,7 +569,7 @@ $('contentForm').addEventListener('submit',async e=>{
     }
     $('contentFeedback').textContent='Збережено для всіх відвідувачів.';await refresh();
   }catch(error){$('contentFeedback').textContent=error.message||'Помилка збереження. Спробуйте ще раз.';}
-  finally{busy=false;$('contentSave').disabled=false;}
+  finally{busy=false;$('contentSave').disabled=false;if(selection.id==='estate')renderEstateDraft();}
 });
 let savingStats=false;
 $('statsForm').addEventListener('submit',async e=>{
@@ -591,4 +605,92 @@ document.addEventListener('armani:session',async e=>{
 setInterval(()=>{if(!document.hidden)refresh();},30000);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)refresh();});
 
+
+// Estate carousel. Existing single-photo records remain supported.
+let estateSlides=[],estateSlideIndex=0,estateDraft=[];
+function estatePaths(row){return [...new Set((Array.isArray(row.image_paths)?row.image_paths:[row.image_path]).filter(validPath))].slice(0,10);}
+function drawEstateSlide(animate=false){
+  const host=$('estatePhoto');let img=host.querySelector('img');
+  if(!estateSlides.length){img?.remove();$('estatePrevious').hidden=true;$('estateNext').hidden=true;$('estateCounter').hidden=true;return;}
+  if(!img){img=document.createElement('img');host.prepend(img);}
+  estateSlideIndex=(estateSlideIndex+estateSlides.length)%estateSlides.length;
+  const url=imageUrl(estateSlides[estateSlideIndex]);
+  if(img.getAttribute('src')!==url)img.src=url;
+  const title=media.find(r=>r.slot==='estate')?.title||'Маєток ARMANI';
+  img.alt=`${title} — фото ${estateSlideIndex+1} з ${estateSlides.length}`;
+  $('estateCounter').textContent=`${estateSlideIndex+1} / ${estateSlides.length}`;
+  $('estatePrevious').hidden=estateSlides.length<2;$('estateNext').hidden=estateSlides.length<2;$('estateCounter').hidden=false;
+  if(animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&img.animate){img.getAnimations().forEach(a=>a.cancel());img.animate([{opacity:.5},{opacity:1}],{duration:250,easing:'ease-out'});}
+}
+function updateEstate(row){
+  const current=estateSlides[estateSlideIndex];estateSlides=estatePaths(row);
+  estateSlideIndex=Math.max(0,estateSlides.indexOf(current));drawEstateSlide();
+}
+$('estatePrevious').addEventListener('click',()=>{estateSlideIndex--;drawEstateSlide(true);});
+$('estateNext').addEventListener('click',()=>{estateSlideIndex++;drawEstateSlide(true);});
+$('estatePhoto').addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();estateSlideIndex+=e.key==='ArrowRight'?1:-1;drawEstateSlide(true);}
+});
+function clearEstateDraft(){estateDraft.forEach(item=>{if(item.preview)URL.revokeObjectURL(item.preview);});estateDraft=[];}
+function renderEstateDraft(){
+  const list=$('estatePhotoList');list.replaceChildren();
+  estateDraft.forEach((item,index)=>{
+    const row=document.createElement('div');row.className='estate-edit-photo';
+    const img=document.createElement('img');img.src=item.preview||imageUrl(item.path);img.alt=`Фото ${index+1}`;
+    const label=document.createElement('span');label.textContent=`${index+1}. ${item.file?.name||'Збережений скриншот'}`;row.append(img,label);
+    for(const [text,action] of [['↑','up'],['↓','down'],['Прибрати','remove']]){
+      const button=document.createElement('button');button.type='button';button.className='btn';button.textContent=text;
+      button.setAttribute('aria-label',`${text==='↑'?'Перемістити вище':text==='↓'?'Перемістити нижче':'Прибрати'} фото ${index+1}`);
+      button.disabled=busy||(action==='up'&&index===0)||(action==='down'&&index===estateDraft.length-1);
+      button.addEventListener('click',()=>{
+        if(busy)return;
+        if(action==='remove'){const [removed]=estateDraft.splice(index,1);if(removed.preview)URL.revokeObjectURL(removed.preview);}
+        else{const other=index+(action==='up'?-1:1);[estateDraft[index],estateDraft[other]]=[estateDraft[other],estateDraft[index]];}
+        renderEstateDraft();
+      });row.append(button);
+    }
+    list.append(row);
+  });
+  $('estateDraftCount').textContent=`Фото: ${estateDraft.length} / 10`;
+}
+$('estateFiles').addEventListener('change',async e=>{
+  const files=[...e.target.files];e.target.value='';if(busy||!admin)return;
+  const session=estateDraft;
+  try{
+    if(estateDraft.length+files.length>10)throw Error('Можна додати не більше 10 фото.');
+    for(const file of files)await validateImage(file);
+    if(busy||!admin||session!==estateDraft)return;
+    if(estateDraft.length+files.length>10)throw Error('Можна додати не більше 10 фото.');
+    files.forEach(file=>estateDraft.push({file,preview:URL.createObjectURL(file)}));renderEstateDraft();$('contentFeedback').textContent='Фото додані до списку. Натисніть «Зберегти для всіх».';
+  }catch(error){$('contentFeedback').textContent=error.message;}
+});
+async function saveEstateGallery(title,description){
+  const draft=estateDraft.map(item=>({...item}));const uploaded=[];let committed=false,canClean=true;
+  $('estateFiles').disabled=true;renderEstateDraft();
+  try{
+    if(draft.length>10)throw Error('Максимум 10 фото.');
+    for(const item of draft)if(item.file)await validateImage(item.file);
+    const paths=[];
+    for(const item of draft){
+      if(item.path){paths.push(item.path);continue;}
+      const ext={'image/png':'png','image/jpeg':'jpg','image/webp':'webp'}[item.file.type];
+      const path=`media/${crypto.randomUUID()}.${ext}`;
+      const {error}=await db.storage.from('armani-media').upload(path,item.file,{contentType:item.file.type,upsert:false});
+      if(error)throw Error('Не вдалося завантажити фото. Спробуйте ще раз.');
+      uploaded.push(path);paths.push(path);
+    }
+    const update={title,description,image_paths:paths,image_path:paths[0]||null};
+    canClean=false; // A lost response may still mean the database committed.
+    const {data,error}=await db.from('armani_media').update(update).eq('slot','estate').select('slot');
+    if(error?.code)canClean=true;
+    if(error||!data?.length)throw Error(error?.code==='PGRST204'||error?.code==='42703'?'Виконайте 07-estate-gallery.sql у Supabase SQL Editor.':'Не вдалося зберегти галерею. Перевірте права адміністратора.');
+    committed=true;
+    const row=media.find(r=>r.slot==='estate');if(row)Object.assign(row,update);
+    clearEstateDraft();estateDraft=paths.map(path=>({path}));renderEstateDraft();paint();
+  }catch(error){
+    // Only newly uploaded, unsaved files are cleaned up. Existing photos are retained.
+    if(!committed&&canClean&&uploaded.length){try{await db.storage.from('armani-media').remove(uploaded);}catch{}}
+    throw error;
+  }finally{$('estateFiles').disabled=false;}
+}
 </script></body></html>
