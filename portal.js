@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const get = (id) => document.getElementById(id);
-  const defaults = { invite: 'aCtM95daZW' };
+  const defaults = { invite: 'wWHsAJwF4q' };
   let config = { ...defaults };
 
   let refreshTimer;
